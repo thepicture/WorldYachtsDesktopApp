@@ -1,0 +1,30 @@
+﻿<Window x:Class="WorldYachtsDesktopApp.NavigationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WorldYachtsDesktopApp"
+        mc:Ignorable="d"
+        Title="{Binding ElementName=MainFrame, Path=Content.Title, StringFormat={}WorldYachts - {0}, FallbackValue=WorldYachts - Окно навигации}"
+        Height="450"
+        Width="800"
+        MinHeight="450"
+        MinWidth="800"
+        FontFamily="{StaticResource BaseFont}"
+        Icon="{StaticResource CompanyLogo}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <Grid Background="{StaticResource ThirdAdditionalColor}"
+              Effect="{StaticResource CommonShadow}">
+        </Grid>
+        <Frame Grid.Row="1"
+               Name="MainFrame"></Frame>
+        <Grid Grid.Row="2"
+              Background="{StaticResource FirstAdditionalColor}"
+              Effect="{StaticResource CommonShadow}"></Grid>
+    </Grid>
+</Window>
