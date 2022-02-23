@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using WorldYachtsDesktopApp.Views.Pages;
 
 namespace WorldYachtsDesktopApp
 {
@@ -10,6 +11,7 @@ namespace WorldYachtsDesktopApp
         public NavigationWindow()
         {
             InitializeComponent();
+            _ = MainFrame.Navigate(new LoginPage());
         }
     }
 }

@@ -11,6 +11,7 @@
         MinHeight="450"
         MinWidth="800"
         FontFamily="{StaticResource BaseFont}"
+        WindowStartupLocation="CenterScreen"
         Icon="{StaticResource CompanyLogo}">
     <Grid>
         <Grid.RowDefinitions>
@@ -20,6 +21,10 @@
         </Grid.RowDefinitions>
         <Grid Background="{StaticResource ThirdAdditionalColor}"
               Effect="{StaticResource CommonShadow}">
+            <Image Source="{StaticResource CompanyLogo}"
+                   HorizontalAlignment="Left"></Image>
+            <Label Content="{Binding ElementName=MainFrame, Path=Content.Title, FallbackValue=Окно навигации}"
+                   Style="{StaticResource HeaderLabel}"></Label>
         </Grid>
         <Frame Grid.Row="1"
                Name="MainFrame"></Frame>

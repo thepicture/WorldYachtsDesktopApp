@@ -1,0 +1,28 @@
+﻿<Page x:Class="WorldYachtsDesktopApp.Views.Pages.LoginPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:WorldYachtsDesktopApp.Views.Pages"
+      mc:Ignorable="d"
+      d:DesignHeight="450"
+      d:DesignWidth="800"
+      Title="Страница авторизации">
+    <Grid>
+        <StackPanel HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Логин"></Label>
+                <TextBox></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Пароль"></Label>
+                <TextBox></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Авторизоваться"></Button>
+                <Button Content="Выйти из приложения"></Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>
