@@ -6,5 +6,6 @@
         Ok = 2,
         NeedToChangePasswordButOk = 3,
         NoActions = 4,
+        IsBlocked = 5,
     }
 }

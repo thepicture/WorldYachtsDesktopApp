@@ -17,6 +17,10 @@ namespace WorldYachtsDesktopApp.Services
         private LoginReason _currentReason = LoginReason.NoActions;
         public TimeSpan GetBlockTime()
         {
+            if (_incorrectAttemptsCount < 3)
+            {
+                return TimeSpan.Zero;
+            }
             return _blockTime;
         }
 
@@ -32,13 +36,26 @@ namespace WorldYachtsDesktopApp.Services
             {
                 IEnumerable<MockLoginPasswordPair> credentials =
                     await context.GetAllAsync();
-                bool isAuthenticated = credentials.Any(c =>
+                MockLoginPasswordPair currentPair = credentials.FirstOrDefault(c =>
                 {
-                    return c.Login.ToLower() == login
-                           && c.Password.ToLower() == password;
+                    return c.Login.ToLower()
+                    == login.ToLower()
+                    && c.Password == password;
                 });
-                if (isAuthenticated)
+                if (currentPair != null)
                 {
+                    if (DateTime.Now.Subtract(currentPair.LastInteractionDate).TotalDays >= 31)
+                    {
+                        _currentReason = LoginReason.IsBlocked;
+                        return await Task.FromResult(false);
+                    }
+
+                    if (DateTime.Now.Subtract(currentPair.LastChangePasswordDate).TotalDays >= 14)
+                    {
+                        _currentReason = LoginReason.NeedToChangePasswordButOk;
+                        return await Task.FromResult(false);
+                    }
+
                     _incorrectAttemptsCount = 0;
                     _blockTime = TimeSpan.FromSeconds(15);
                     _currentReason = LoginReason.Ok;
@@ -47,9 +64,9 @@ namespace WorldYachtsDesktopApp.Services
                 else
                 {
                     _incorrectAttemptsCount++;
+                    _currentReason = LoginReason.Incorrect;
                     if (_incorrectAttemptsCount > 3)
                     {
-                        _currentReason = LoginReason.Incorrect;
                         _blockTime += _blockIncrementTime;
                     }
                     return await Task.FromResult(false);

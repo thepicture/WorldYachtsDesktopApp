@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.32126.315
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldYachtsDesktopApp", "WorldYachtsDesktopApp.csproj", "{44B5B13D-8BA0-433D-9C50-BB4E46CADE9D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldYachtsDesktopAppTests", "..\WorldYachtsDesktopAppTests\WorldYachtsDesktopAppTests.csproj", "{EA87F386-B666-4A23-917F-766C8A8FAB39}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{44B5B13D-8BA0-433D-9C50-BB4E46CADE9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44B5B13D-8BA0-433D-9C50-BB4E46CADE9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44B5B13D-8BA0-433D-9C50-BB4E46CADE9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA87F386-B666-4A23-917F-766C8A8FAB39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA87F386-B666-4A23-917F-766C8A8FAB39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA87F386-B666-4A23-917F-766C8A8FAB39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA87F386-B666-4A23-917F-766C8A8FAB39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
