@@ -72,6 +72,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\LoginModels\LoginReason.cs" />
+    <Compile Include="Models\MockLoginPasswordPair.cs" />
+    <Compile Include="Services\IAuthenticationService.cs" />
+    <Compile Include="Services\ILoginProvider.cs" />
+    <Compile Include="Services\MockLoginProvider.cs" />
+    <Compile Include="Services\UserAuthenticatonService.cs" />
     <Compile Include="Views\Pages\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
@@ -106,9 +112,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\logo.png" />
   </ItemGroup>
