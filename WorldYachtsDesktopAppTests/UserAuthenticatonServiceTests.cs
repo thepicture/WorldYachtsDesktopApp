@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Threading.Tasks;
+using WorldYachtsDesktopApp;
 using WorldYachtsDesktopApp.Models.LoginModels;
 using WorldYachtsDesktopApp.Services;
 
@@ -21,67 +22,52 @@ namespace WorldYachtsDesktopAppTests
         public async Task LoginAsync_SuccessfulLogin_ReasonIsOk()
         {
             // Arrange.
-            LoginReason expected = LoginReason.Ok;
+            Type expected = typeof(OkLoginResponse);
             string login = "123";
             string password = "321";
             // Act.
-            await _service.LoginAsync(login, password);
-            LoginReason actual = _service.GetReason();
+            ILoginResponse actual = await _service.LoginAsync(login, password);
             // Assert.
-            Assert.AreEqual(expected, actual);
+            Assert.IsInstanceOfType(actual, expected);
         }
 
         [TestMethod]
         public async Task LoginAsync_IncorrectLoginAndPassword_ReasonIsIncorrect()
         {
             // Arrange.
-            LoginReason expected = LoginReason.Incorrect;
+            Type expected = typeof(IncorrectLoginResponse);
             string login = "___";
             string password = "___";
             // Act.
-            await _service.LoginAsync(login, password);
-            LoginReason actual = _service.GetReason();
+            ILoginResponse actual = await _service.LoginAsync(login, password);
             // Assert.
-            Assert.AreEqual(expected, actual);
+            Assert.IsInstanceOfType(actual, expected);
         }
 
         [TestMethod]
         public async Task LoginAsync_CorrectLoginIncorrectPassword_ReasonIsIncorrect()
         {
             // Arrange.
-            LoginReason expected = LoginReason.Incorrect;
+            Type expected = typeof(IncorrectLoginResponse);
             string login = "122";
             string password = "___";
             // Act.
-            await _service.LoginAsync(login, password);
-            LoginReason actual = _service.GetReason();
+            ILoginResponse actual = await _service.LoginAsync(login, password);
             // Assert.
-            Assert.AreEqual(expected, actual);
+            Assert.IsInstanceOfType(actual, expected);
         }
 
         [TestMethod]
         public async Task LoginAsync_IncorrectLoginCorrectPassword_ReasonIsIncorrect()
         {
             // Arrange.
-            LoginReason expected = LoginReason.Incorrect;
+            Type expected = typeof(IncorrectLoginResponse);
             string login = "___";
             string password = "321";
             // Act.
-            await _service.LoginAsync(login, password);
-            LoginReason actual = _service.GetReason();
+            ILoginResponse actual = await _service.LoginAsync(login, password);
             // Assert.
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod]
-        public void LoginAsync_NoAnyActions_ReasonIsNoActions()
-        {
-            // Arrange.
-            LoginReason expected = LoginReason.Empty;
-            // Act.
-            LoginReason actual = _service.GetReason();
-            // Assert.
-            Assert.AreEqual(expected, actual);
+            Assert.IsInstanceOfType(actual, expected);
         }
 
         [TestMethod]
@@ -90,7 +76,7 @@ namespace WorldYachtsDesktopAppTests
             // Arrange.
             TimeSpan expected = TimeSpan.Zero;
             // Act.
-            TimeSpan actual = _service.GetBlockTime();
+            TimeSpan actual = _service.BlockTime;
             // Assert.
             Assert.AreEqual(expected, actual);
         }
@@ -103,8 +89,8 @@ namespace WorldYachtsDesktopAppTests
             string login = "123";
             string password = "321";
             // Act.
-            await _service.LoginAsync(login, password);
-            TimeSpan actual = _service.GetBlockTime();
+            _ = await _service.LoginAsync(login, password);
+            TimeSpan actual = _service.BlockTime;
             // Assert.
             Assert.AreEqual(expected, actual);
         }
@@ -119,9 +105,9 @@ namespace WorldYachtsDesktopAppTests
             // Act.
             for (int i = 0; i < 3; i++)
             {
-                await _service.LoginAsync(login, password);
+                _ = await _service.LoginAsync(login, password);
             }
-            TimeSpan actual = _service.GetBlockTime();
+            TimeSpan actual = _service.BlockTime;
             // Assert.
             Assert.AreEqual(expected, actual);
         }
@@ -136,9 +122,9 @@ namespace WorldYachtsDesktopAppTests
             // Act.
             for (int i = 0; i < 4; i++)
             {
-                await _service.LoginAsync(login, password);
+                _ = await _service.LoginAsync(login, password);
             }
-            TimeSpan actual = _service.GetBlockTime();
+            TimeSpan actual = _service.BlockTime;
             // Assert.
             Assert.AreEqual(expected, actual);
         }
@@ -153,12 +139,12 @@ namespace WorldYachtsDesktopAppTests
             // Act.
             for (int i = 0; i < 4; i++)
             {
-                await _service.LoginAsync(login, password);
+                _ = await _service.LoginAsync(login, password);
             }
             login = "123";
             password = "321";
-            await _service.LoginAsync(login, password);
-            TimeSpan actual = _service.GetBlockTime();
+            _ = await _service.LoginAsync(login, password);
+            TimeSpan actual = _service.BlockTime;
             // Assert.
             Assert.AreEqual(expected, actual);
         }
@@ -167,42 +153,39 @@ namespace WorldYachtsDesktopAppTests
         public async Task LoginAsync_LoginToOneMonthAccount_AccountIsBlocked()
         {
             // Arrange.
-            LoginReason expected = LoginReason.IsBlocked;
+            Type expected = typeof(BlockedLoginResponse);
             string login = "xyz";
             string password = "zyx";
             // Act.
-            await _service.LoginAsync(login, password);
-            LoginReason actual = _service.GetReason();
+            ILoginResponse actual = await _service.LoginAsync(login, password);
             // Assert.
-            Assert.AreEqual(expected, actual);
+            Assert.IsInstanceOfType(actual, expected);
         }
 
         [TestMethod]
         public async Task LoginAsync_LoginCaseDoesNotMatch_ReasonIsOk()
         {
             // Arrange.
-            LoginReason expected = LoginReason.Ok;
+            Type expected = typeof(OkLoginResponse);
             string login = "CdE";
             string password = "123";
             // Act.
-            await _service.LoginAsync(login, password);
-            LoginReason actual = _service.GetReason();
+            ILoginResponse actual = await _service.LoginAsync(login, password);
             // Assert.
-            Assert.AreEqual(expected, actual);
+            Assert.IsInstanceOfType(actual, expected);
         }
 
         [TestMethod]
-        public async Task LoginAsync_LoginCaseDoesNotMatch_ReasonIsNeedToChangePasswordButOk()
+        public async Task LoginAsync_LoginCaseDoesNotMatch_ReasonOkButChangePasswordResponse()
         {
             // Arrange.
-            LoginReason expected = LoginReason.NeedToChangePasswordButOk;
+            Type expected = typeof(OkButChangePasswordResponse);
             string login = "abc";
             string password = "cba";
             // Act.
-            await _service.LoginAsync(login, password);
-            LoginReason actual = _service.GetReason();
+            ILoginResponse actual = await _service.LoginAsync(login, password);
             // Assert.
-            Assert.AreEqual(expected, actual);
+            Assert.IsInstanceOfType(actual, expected);
         }
     }
 }

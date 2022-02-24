@@ -72,8 +72,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\LoginModels\LoginReason.cs" />
+    <Compile Include="Models\LoginModels\BlockedLoginResponse.cs" />
+    <Compile Include="Models\LoginModels\IHaveBlocker.cs" />
+    <Compile Include="Models\LoginModels\IncorrectLoginResponse.cs" />
+    <Compile Include="Models\LoginModels\ILoginResponse.cs" />
     <Compile Include="Models\LoginModels\MockLoginPasswordPair.cs" />
+    <Compile Include="Models\LoginModels\OkButChangePasswordResponse.cs" />
+    <Compile Include="Models\LoginModels\OkLoginResponse.cs" />
     <Compile Include="Services\IAuthenticationService.cs" />
     <Compile Include="Services\IFeedbackService.cs" />
     <Compile Include="Services\ILoginProvider.cs" />

@@ -1,19 +1,14 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using System.Windows;
 using WorldYachtsDesktopApp.Models.LoginModels;
 
 namespace WorldYachtsDesktopApp.Services
 {
     /// <summary>
-    /// Определяет методы для аутентификации.
+    /// Определяет методы для аутентификации с поддержкой блокировки.
     /// </summary>
-    public interface IAuthenticationService
+    public interface IAuthenticationService : IHaveBlocker<UIElement>
     {
-        /// <summary>
-        /// Получает причину результата аутентификации.
-        /// </summary>
-        /// <returns></returns>
-        LoginReason GetReason();
         /// <summary>
         /// Осуществляет аутентификацию.
         /// </summary>
@@ -21,11 +16,6 @@ namespace WorldYachtsDesktopApp.Services
         /// <param name="password">Пароль.</param>
         /// <returns>Задача.</returns>
 
-        Task LoginAsync(string login, string password);
-        /// <summary>
-        /// Получает время блокировки.
-        /// </summary>
-        /// <returns>Время блокировки.</returns>
-        TimeSpan GetBlockTime();
+        Task<ILoginResponse> LoginAsync(string login, string password);
     }
 }

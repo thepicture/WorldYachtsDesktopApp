@@ -2,33 +2,43 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using WorldYachtsDesktopApp.Models.LoginModels;
 
 namespace WorldYachtsDesktopApp.Services
 {
     public class UserAuthenticatonService : IAuthenticationService
     {
-        private TimeSpan _blockTime =
-            TimeSpan.FromSeconds(15);
-        private readonly TimeSpan _blockIncrementTime =
-            TimeSpan.FromSeconds(20);
-        private int _incorrectAttemptsCount = 0;
-        private LoginReason _currentReason = LoginReason.Empty;
-        public TimeSpan GetBlockTime()
+        private TimeSpan blockTime = TimeSpan.FromSeconds(15);
+        public TimeSpan BlockTime
         {
-            if (_incorrectAttemptsCount < 3)
+            get
             {
-                return TimeSpan.Zero;
+                return _incorrectAttemptsCount < 3
+                    ? TimeSpan.Zero
+                    : blockTime;
             }
-            return _blockTime;
+            set => blockTime = value;
         }
 
-        public LoginReason GetReason()
+        public TimeSpan BlockIncrementTime { get; } =
+            TimeSpan.FromSeconds(20);
+        private readonly UIElement owner;
+        private int _incorrectAttemptsCount = 0;
+        public ITimeoutBlocker<UIElement> Blocker { get; }
+
+        public UserAuthenticatonService(UIElement owner, ITimeoutBlocker<UIElement> blocker)
         {
-            return _currentReason;
+            this.owner = owner;
+            Blocker = blocker;
         }
 
-        public async Task LoginAsync(string login, string password)
+        public UserAuthenticatonService()
+        {
+        }
+
+
+        public async Task<ILoginResponse> LoginAsync(string login, string password)
         {
             using (ILoginProvider<MockLoginPasswordPair> context =
                 new StubLoginProvider())
@@ -45,28 +55,30 @@ namespace WorldYachtsDesktopApp.Services
                 {
                     if (DateTime.Now.Subtract(currentPair.LastInteractionDate).TotalDays >= 31)
                     {
-                        _currentReason = LoginReason.IsBlocked;
-                        return;
+                        return new BlockedLoginResponse();
                     }
 
                     if (DateTime.Now.Subtract(currentPair.LastChangePasswordDate).TotalDays >= 14)
                     {
-                        _currentReason = LoginReason.NeedToChangePasswordButOk;
-                        return;
+                        return new OkButChangePasswordResponse();
                     }
 
                     _incorrectAttemptsCount = 0;
-                    _blockTime = TimeSpan.FromSeconds(15);
-                    _currentReason = LoginReason.Ok;
+                    BlockTime = TimeSpan.FromSeconds(15);
+                    return new OkLoginResponse();
                 }
                 else
                 {
                     _incorrectAttemptsCount++;
-                    _currentReason = LoginReason.Incorrect;
                     if (_incorrectAttemptsCount > 3)
                     {
-                        _blockTime += _blockIncrementTime;
+                        if (owner != null)
+                        {
+                            Blocker.Block(owner, BlockTime);
+                        }
+                        BlockTime += BlockIncrementTime;
                     }
+                    return new IncorrectLoginResponse();
                 }
             }
         }
