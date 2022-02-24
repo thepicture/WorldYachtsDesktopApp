@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using WorldYachtsDesktopApp.Models;
+using WorldYachtsDesktopApp.Models.LoginModels;
 
 namespace WorldYachtsDesktopApp.Services
 {

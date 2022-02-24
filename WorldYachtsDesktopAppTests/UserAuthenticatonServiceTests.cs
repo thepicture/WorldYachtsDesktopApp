@@ -77,7 +77,7 @@ namespace WorldYachtsDesktopAppTests
         public void LoginAsync_NoAnyActions_ReasonIsNoActions()
         {
             // Arrange.
-            LoginReason expected = LoginReason.NoActions;
+            LoginReason expected = LoginReason.Empty;
             // Act.
             LoginReason actual = _service.GetReason();
             // Assert.

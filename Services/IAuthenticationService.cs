@@ -19,11 +19,9 @@ namespace WorldYachtsDesktopApp.Services
         /// </summary>
         /// <param name="login">Логин.</param>
         /// <param name="password">Пароль.</param>
-        /// <returns><see langword="true", 
-        /// если авторизация успешна, иначе <see langword="false" 
-        /// с причиной в <see cref="GetReason"./>/>/></returns>
+        /// <returns>Задача.</returns>
 
-        Task<bool> LoginAsync(string login, string password);
+        Task LoginAsync(string login, string password);
         /// <summary>
         /// Получает время блокировки.
         /// </summary>

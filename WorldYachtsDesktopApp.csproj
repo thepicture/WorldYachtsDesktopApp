@@ -73,7 +73,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\LoginModels\LoginReason.cs" />
-    <Compile Include="Models\MockLoginPasswordPair.cs" />
+    <Compile Include="Models\LoginModels\MockLoginPasswordPair.cs" />
     <Compile Include="Services\IAuthenticationService.cs" />
     <Compile Include="Services\IFeedbackService.cs" />
     <Compile Include="Services\ILoginProvider.cs" />

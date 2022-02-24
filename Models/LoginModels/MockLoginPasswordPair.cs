@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WorldYachtsDesktopApp.Models
+namespace WorldYachtsDesktopApp.Models.LoginModels
 {
     public class MockLoginPasswordPair
     {

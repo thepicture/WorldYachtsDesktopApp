@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WorldYachtsDesktopApp.Models;
 using WorldYachtsDesktopApp.Models.LoginModels;
 
 namespace WorldYachtsDesktopApp.Services
@@ -14,7 +13,7 @@ namespace WorldYachtsDesktopApp.Services
         private readonly TimeSpan _blockIncrementTime =
             TimeSpan.FromSeconds(20);
         private int _incorrectAttemptsCount = 0;
-        private LoginReason _currentReason = LoginReason.NoActions;
+        private LoginReason _currentReason = LoginReason.Empty;
         public TimeSpan GetBlockTime()
         {
             if (_incorrectAttemptsCount < 3)
@@ -29,7 +28,7 @@ namespace WorldYachtsDesktopApp.Services
             return _currentReason;
         }
 
-        public async Task<bool> LoginAsync(string login, string password)
+        public async Task LoginAsync(string login, string password)
         {
             using (ILoginProvider<MockLoginPasswordPair> context =
                 new MockLoginProvider())
@@ -47,19 +46,18 @@ namespace WorldYachtsDesktopApp.Services
                     if (DateTime.Now.Subtract(currentPair.LastInteractionDate).TotalDays >= 31)
                     {
                         _currentReason = LoginReason.IsBlocked;
-                        return await Task.FromResult(false);
+                        return;
                     }
 
                     if (DateTime.Now.Subtract(currentPair.LastChangePasswordDate).TotalDays >= 14)
                     {
                         _currentReason = LoginReason.NeedToChangePasswordButOk;
-                        return await Task.FromResult(false);
+                        return;
                     }
 
                     _incorrectAttemptsCount = 0;
                     _blockTime = TimeSpan.FromSeconds(15);
                     _currentReason = LoginReason.Ok;
-                    return await Task.FromResult(true);
                 }
                 else
                 {
@@ -69,7 +67,6 @@ namespace WorldYachtsDesktopApp.Services
                     {
                         _blockTime += _blockIncrementTime;
                     }
-                    return await Task.FromResult(false);
                 }
             }
         }
