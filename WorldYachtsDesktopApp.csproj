@@ -75,8 +75,12 @@
     <Compile Include="Models\LoginModels\LoginReason.cs" />
     <Compile Include="Models\MockLoginPasswordPair.cs" />
     <Compile Include="Services\IAuthenticationService.cs" />
+    <Compile Include="Services\IFeedbackService.cs" />
     <Compile Include="Services\ILoginProvider.cs" />
+    <Compile Include="Services\ITimeoutBlocker.cs" />
+    <Compile Include="Services\MessageBoxFeedbackService.cs" />
     <Compile Include="Services\MockLoginProvider.cs" />
+    <Compile Include="Services\UIElementTimeoutBlocker.cs" />
     <Compile Include="Services\UserAuthenticatonService.cs" />
     <Compile Include="Views\Pages\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
@@ -104,6 +108,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include=".editorconfig" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

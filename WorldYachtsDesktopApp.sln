@@ -5,7 +5,12 @@ VisualStudioVersion = 16.0.32126.315
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldYachtsDesktopApp", "WorldYachtsDesktopApp.csproj", "{44B5B13D-8BA0-433D-9C50-BB4E46CADE9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldYachtsDesktopAppTests", "..\WorldYachtsDesktopAppTests\WorldYachtsDesktopAppTests.csproj", "{EA87F386-B666-4A23-917F-766C8A8FAB39}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldYachtsDesktopAppTests", "WorldYachtsDesktopAppTests\WorldYachtsDesktopAppTests.csproj", "{EA87F386-B666-4A23-917F-766C8A8FAB39}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D61D85E4-1306-4D23-813D-EA9ED48F1F1A}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -13,15 +13,17 @@
                     VerticalAlignment="Center">
             <StackPanel Orientation="Horizontal">
                 <Label Content="Логин"></Label>
-                <TextBox></TextBox>
+                <TextBox Name="Login"></TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Пароль"></Label>
-                <TextBox></TextBox>
+                <PasswordBox Name="Password"></PasswordBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Button Content="Авторизоваться"></Button>
-                <Button Content="Выйти из приложения"></Button>
+                <Button Content="Авторизоваться"
+                        Click="PerformAuthenticationAsync"></Button>
+                <Button Content="Выйти из приложения"
+                        Click="PerformExitAsync"></Button>
             </StackPanel>
         </StackPanel>
     </Grid>

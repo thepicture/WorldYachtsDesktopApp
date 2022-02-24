@@ -47,6 +47,9 @@
     <Style TargetType="TextBox"
            BasedOn="{StaticResource {x:Type FrameworkElement}}">
     </Style>
+    <Style TargetType="PasswordBox"
+           BasedOn="{StaticResource {x:Type FrameworkElement}}">
+    </Style>
 
     <Style TargetType="TextBlock"
            BasedOn="{StaticResource {x:Type FrameworkElement}}"

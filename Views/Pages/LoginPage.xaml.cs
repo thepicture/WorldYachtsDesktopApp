@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using WorldYachtsDesktopApp.Models.LoginModels;
+using WorldYachtsDesktopApp.Services;
 
 namespace WorldYachtsDesktopApp.Views.Pages
 {
@@ -20,9 +10,62 @@ namespace WorldYachtsDesktopApp.Views.Pages
     /// </summary>
     public partial class LoginPage : Page
     {
+        private readonly IAuthenticationService authenticationService =
+            new UserAuthenticatonService();
+        private readonly IFeedbackService feedbackService =
+            new MessageBoxFeedbackService();
+        private readonly ITimeoutBlocker<UIElement> blocker =
+            new UIElementTimeoutBlocker();
+
         public LoginPage()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Выполнить аутентификацию.
+        /// </summary>
+        private async void PerformAuthenticationAsync(object sender, RoutedEventArgs e)
+        {
+            if (await authenticationService.LoginAsync(Login.Text, Password.Password))
+            {
+                await feedbackService.InformAsync("Вы успешно авторизованы");
+            }
+            else
+            {
+                switch (authenticationService.GetReason())
+                {
+                    case LoginReason.Incorrect:
+                        await feedbackService.WarnAsync("Неверный логин или пароль");
+                        blocker.Block(this, authenticationService.GetBlockTime());
+                        break;
+                    case LoginReason.IsBlocked:
+                        await feedbackService.InformAsync("Вы заблокированы. " +
+                            "Пользователь системы не заходил в неё в течении 1 месяца");
+                        break;
+                    case LoginReason.NeedToChangePasswordButOk:
+                        await feedbackService.InformAsync("пользователь не менял пароль " +
+                            "в течении 14 дней. Сейчас появится форма для смены пароля");
+                        break;
+                    case LoginReason.Ok:
+                        break;
+                    case LoginReason.NoActions:
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Выключить текущее приложение.
+        /// </summary>
+        private async void PerformExitAsync(object sender, RoutedEventArgs e)
+        {
+            if (await feedbackService.AskAsync("Действительно выключить приложение?"))
+            {
+                App.Current.Shutdown();
+            }
         }
     }
 }
