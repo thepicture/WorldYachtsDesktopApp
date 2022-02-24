@@ -5,7 +5,7 @@ using WorldYachtsDesktopApp.Models.LoginModels;
 
 namespace WorldYachtsDesktopApp.Services
 {
-    public class MockLoginProvider : ILoginProvider<MockLoginPasswordPair>
+    public class StubLoginProvider : ILoginProvider<MockLoginPasswordPair>
     {
         public async Task<IEnumerable<MockLoginPasswordPair>> GetAllAsync()
         {

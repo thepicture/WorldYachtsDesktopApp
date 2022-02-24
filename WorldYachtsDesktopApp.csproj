@@ -79,7 +79,7 @@
     <Compile Include="Services\ILoginProvider.cs" />
     <Compile Include="Services\ITimeoutBlocker.cs" />
     <Compile Include="Services\MessageBoxFeedbackService.cs" />
-    <Compile Include="Services\MockLoginProvider.cs" />
+    <Compile Include="Services\StubLoginProvider.cs" />
     <Compile Include="Services\UIElementTimeoutBlocker.cs" />
     <Compile Include="Services\UserAuthenticatonService.cs" />
     <Compile Include="Views\Pages\LoginPage.xaml.cs">

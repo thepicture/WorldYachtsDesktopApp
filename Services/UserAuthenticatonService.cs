@@ -31,7 +31,7 @@ namespace WorldYachtsDesktopApp.Services
         public async Task LoginAsync(string login, string password)
         {
             using (ILoginProvider<MockLoginPasswordPair> context =
-                new MockLoginProvider())
+                new StubLoginProvider())
             {
                 IEnumerable<MockLoginPasswordPair> credentials =
                     await context.GetAllAsync();
