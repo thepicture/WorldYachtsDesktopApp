@@ -4,30 +4,30 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="824f6db24678483ea92ac4ba9e0dba21" Name="Diagram1">
-        <EntityTypeShape EntityType="WorldYachtsBaseModel.Accessory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="WorldYachtsBaseModel.Boats" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="WorldYachtsBaseModel.Contract" Width="1.5" PointX="8.25" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="WorldYachtsBaseModel.Customer" Width="1.5" PointX="3.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="WorldYachtsBaseModel.Detail" Width="1.5" PointX="8.25" PointY="2.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="WorldYachtsBaseModel.Fit" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="WorldYachtsBaseModel.Invoice" Width="1.5" PointX="10.5" PointY="6.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="WorldYachtsBaseModel.Order" Width="1.5" PointX="6" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="WorldYachtsBaseModel.Partner" Width="1.5" PointX="1.5" PointY="11.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="WorldYachtsBaseModel.Role" Width="1.5" PointX="5.75" PointY="11.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="WorldYachtsBaseModel.SalesPerson" Width="1.5" PointX="3.75" PointY="9.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="WorldYachtsBaseModel.User" Width="1.5" PointX="8" PointY="10.875" IsExpanded="true" />
-        <AssociationConnector Association="WorldYachtsBaseModel.FK_Accessory_Partner" ManuallyRouted="false" />
-        <AssociationConnector Association="WorldYachtsBaseModel.FK_Detail_Accessory" ManuallyRouted="false" />
-        <AssociationConnector Association="WorldYachtsBaseModel.FK_Fit_Accessory" ManuallyRouted="false" />
-        <AssociationConnector Association="WorldYachtsBaseModel.FK_Fit_Boats" ManuallyRouted="false" />
-        <AssociationConnector Association="WorldYachtsBaseModel.FK_Order_Boats" ManuallyRouted="false" />
-        <AssociationConnector Association="WorldYachtsBaseModel.FK_Contract_Order" ManuallyRouted="false" />
-        <AssociationConnector Association="WorldYachtsBaseModel.FK_Invoice_Contract" ManuallyRouted="false" />
-        <AssociationConnector Association="WorldYachtsBaseModel.FK_Order_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="WorldYachtsBaseModel.FK_Detail_Order" ManuallyRouted="false" />
-        <AssociationConnector Association="WorldYachtsBaseModel.FK_Order_Salesperson" ManuallyRouted="false" />
-        <AssociationConnector Association="WorldYachtsBaseModel.FK_User_Role" ManuallyRouted="false" />
+      <Diagram DiagramId="97d4b4a42b1946079ad5c1c88583e752" Name="Diagram1">
+        <EntityTypeShape EntityType="Context.Accessory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Context.Boats" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Context.Contract" Width="1.5" PointX="8.25" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="Context.Customer" Width="1.5" PointX="3.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Context.Detail" Width="1.5" PointX="8.25" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Context.Fit" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Context.Invoice" Width="1.5" PointX="10.5" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Context.Order" Width="1.5" PointX="6" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Context.Partner" Width="1.5" PointX="1.5" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Context.Role" Width="1.5" PointX="5.75" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Context.SalesPerson" Width="1.5" PointX="3.75" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Context.User" Width="1.5" PointX="8" PointY="10.875" IsExpanded="true" />
+        <AssociationConnector Association="Context.FK_Accessory_Partner" ManuallyRouted="false" />
+        <AssociationConnector Association="Context.FK_Detail_Accessory" ManuallyRouted="false" />
+        <AssociationConnector Association="Context.FK_Fit_Accessory" ManuallyRouted="false" />
+        <AssociationConnector Association="Context.FK_Fit_Boats" ManuallyRouted="false" />
+        <AssociationConnector Association="Context.FK_Order_Boats" ManuallyRouted="false" />
+        <AssociationConnector Association="Context.FK_Contract_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="Context.FK_Invoice_Contract" ManuallyRouted="false" />
+        <AssociationConnector Association="Context.FK_Order_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="Context.FK_Detail_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="Context.FK_Order_Salesperson" ManuallyRouted="false" />
+        <AssociationConnector Association="Context.FK_User_Role" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

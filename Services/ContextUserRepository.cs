@@ -9,24 +9,24 @@ namespace WorldYachtsDesktopApp.Services
     {
         public async Task AddUserAsync(User user)
         {
-            using (Context context = new Context())
+            using (WorldYachtsBaseEntities context = new WorldYachtsBaseEntities())
             {
-                await Task.Run(() =>
-                {
-                    context.User.Add(user);
-                });
+                _ = await Task.Run(() =>
+                  {
+                      return context.User.Add(user);
+                  });
             }
         }
 
         public async Task<User> GetUserByLoginPasswordAsync(string login, string password)
         {
-            using (Context context = new Context())
+            using (WorldYachtsBaseEntities context = new WorldYachtsBaseEntities())
             {
                 return await Task.Run(() =>
                 {
-                    return context.User.FirstOrDefault(u =>
-                    u.Login.ToLower()
-                    == login.ToLower() && u.Password == password);
+                    return context.User.ToList().FirstOrDefault(u =>
+                    u.Login.Equals(login, StringComparison.OrdinalIgnoreCase)
+                    && u.Password == password);
                 });
             }
         }

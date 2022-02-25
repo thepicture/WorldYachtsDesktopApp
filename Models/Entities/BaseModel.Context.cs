@@ -13,10 +13,10 @@ namespace WorldYachtsDesktopApp.Models.Entities
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Context : DbContext
+    public partial class WorldYachtsBaseEntities : DbContext
     {
-        public Context()
-            : base("name=Context")
+        public WorldYachtsBaseEntities()
+            : base("name=WorldYachtsBaseEntities")
         {
         }
     

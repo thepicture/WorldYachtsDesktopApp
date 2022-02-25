@@ -27,7 +27,9 @@ namespace WorldYachtsDesktopApp.Services
         private int _incorrectAttemptsCount = 0;
         public ITimeoutBlocker<UIElement> Blocker { get; }
 
-        public UserAuthenticatonService(UIElement owner, ITimeoutBlocker<UIElement> blocker, IUserRepository repository)
+        public UserAuthenticatonService(UIElement owner,
+                                        ITimeoutBlocker<UIElement> blocker,
+                                        IUserRepository repository)
         {
             this.owner = owner;
             Blocker = blocker;
@@ -36,7 +38,7 @@ namespace WorldYachtsDesktopApp.Services
 
         public async Task<ILoginResponse> LoginAsync(string login, string password)
         {
-            using (Context context = new Context())
+            using (WorldYachtsBaseEntities context = new WorldYachtsBaseEntities())
             {
                 User currentUser = await repository.GetUserByLoginPasswordAsync(login, password);
                 if (currentUser != null)

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="WorldYachtsBaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Context.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Accessory">
           <Key>
             <PropertyRef Name="AccessoryId" />
@@ -280,7 +280,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="WorldYachtsBaseModelStoreContainer">
+        <EntityContainer Name="ContextStoreContainer">
           <EntitySet Name="Accessory" EntityType="Self.Accessory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Boats" EntityType="Self.Boats" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Contract" EntityType="Self.Contract" Schema="dbo" store:Type="Tables" />
@@ -342,7 +342,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="WorldYachtsBaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="Context" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Accessory">
           <Key>
             <PropertyRef Name="AccessoryId" />
@@ -640,7 +640,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Context" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="WorldYachtsBaseEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Accessory" EntityType="Self.Accessory" />
           <EntitySet Name="Boats" EntityType="Self.Boats" />
           <EntitySet Name="Contract" EntityType="Self.Contract" />
@@ -703,9 +703,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="WorldYachtsBaseModelStoreContainer" CdmEntityContainer="Context">
+        <EntityContainerMapping StorageEntityContainer="ContextStoreContainer" CdmEntityContainer="WorldYachtsBaseEntities">
           <EntitySetMapping Name="Accessory">
-            <EntityTypeMapping TypeName="WorldYachtsBaseModel.Accessory">
+            <EntityTypeMapping TypeName="Context.Accessory">
               <MappingFragment StoreEntitySet="Accessory">
                 <ScalarProperty Name="AccessoryId" ColumnName="AccessoryId" />
                 <ScalarProperty Name="AccName" ColumnName="AccName" />
@@ -721,7 +721,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Boats">
-            <EntityTypeMapping TypeName="WorldYachtsBaseModel.Boats">
+            <EntityTypeMapping TypeName="Context.Boats">
               <MappingFragment StoreEntitySet="Boats">
                 <ScalarProperty Name="BoatId" ColumnName="BoatId" />
                 <ScalarProperty Name="Model" ColumnName="Model" />
@@ -737,7 +737,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Contract">
-            <EntityTypeMapping TypeName="WorldYachtsBaseModel.Contract">
+            <EntityTypeMapping TypeName="Context.Contract">
               <MappingFragment StoreEntitySet="Contract">
                 <ScalarProperty Name="ContractId" ColumnName="ContractId" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
@@ -751,7 +751,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Customer">
-            <EntityTypeMapping TypeName="WorldYachtsBaseModel.Customer">
+            <EntityTypeMapping TypeName="Context.Customer">
               <MappingFragment StoreEntitySet="Customer">
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="FistName" ColumnName="FistName" />
@@ -769,7 +769,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Detail">
-            <EntityTypeMapping TypeName="WorldYachtsBaseModel.Detail">
+            <EntityTypeMapping TypeName="Context.Detail">
               <MappingFragment StoreEntitySet="Detail">
                 <ScalarProperty Name="DetailId" ColumnName="DetailId" />
                 <ScalarProperty Name="AccessoryId" ColumnName="AccessoryId" />
@@ -779,7 +779,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Fit">
-            <EntityTypeMapping TypeName="WorldYachtsBaseModel.Fit">
+            <EntityTypeMapping TypeName="Context.Fit">
               <MappingFragment StoreEntitySet="Fit">
                 <ScalarProperty Name="FitId" ColumnName="FitId" />
                 <ScalarProperty Name="AccessoryId" ColumnName="AccessoryId" />
@@ -789,7 +789,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Invoice">
-            <EntityTypeMapping TypeName="WorldYachtsBaseModel.Invoice">
+            <EntityTypeMapping TypeName="Context.Invoice">
               <MappingFragment StoreEntitySet="Invoice">
                 <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
                 <ScalarProperty Name="ContractId" ColumnName="ContractId" />
@@ -802,7 +802,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Order">
-            <EntityTypeMapping TypeName="WorldYachtsBaseModel.Order">
+            <EntityTypeMapping TypeName="Context.Order">
               <MappingFragment StoreEntitySet="Order">
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
@@ -816,7 +816,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Partner">
-            <EntityTypeMapping TypeName="WorldYachtsBaseModel.Partner">
+            <EntityTypeMapping TypeName="Context.Partner">
               <MappingFragment StoreEntitySet="Partner">
                 <ScalarProperty Name="PartnerId" ColumnName="PartnerId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -827,7 +827,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Role">
-            <EntityTypeMapping TypeName="WorldYachtsBaseModel.Role">
+            <EntityTypeMapping TypeName="Context.Role">
               <MappingFragment StoreEntitySet="Role">
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="RoleTitle" ColumnName="RoleTitle" />
@@ -836,7 +836,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SalesPerson">
-            <EntityTypeMapping TypeName="WorldYachtsBaseModel.SalesPerson">
+            <EntityTypeMapping TypeName="Context.SalesPerson">
               <MappingFragment StoreEntitySet="SalesPerson">
                 <ScalarProperty Name="SalesPersonId" ColumnName="SalesPersonId" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
@@ -846,7 +846,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="User">
-            <EntityTypeMapping TypeName="WorldYachtsBaseModel.User">
+            <EntityTypeMapping TypeName="Context.User">
               <MappingFragment StoreEntitySet="User">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Login" ColumnName="Login" />
