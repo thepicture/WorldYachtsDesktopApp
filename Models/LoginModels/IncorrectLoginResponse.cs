@@ -9,7 +9,11 @@ namespace WorldYachtsDesktopApp.Models.LoginModels
             new MessageBoxFeedbackService();
         public async Task ExplainToAsync()
         {
-            await feedbackService.WarnAsync("Неверный логин или пароль");
+            await feedbackService.WarnAsync("Вы ввели " +
+                "неверный логин или пароль. " +
+                "Пожалуйста " +
+                "проверьте ещё раз " +
+                "введенные данные");
         }
     }
 }
