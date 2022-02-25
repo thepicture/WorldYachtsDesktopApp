@@ -6,9 +6,9 @@ using WorldYachtsDesktopApp.Models.Entities;
 
 namespace WorldYachtsDesktopApp.Services
 {
-    public class StubUserRepository : IUserRepository
+    public class StubUserRepository
     {
-        private readonly IList<User> users = new List<User>
+        private IList<User> users = new List<User>
             {
                 new User
                 {
@@ -22,13 +22,15 @@ namespace WorldYachtsDesktopApp.Services
                     Login = "abc",
                     Password = "cba",
                     LastInteractionDate = DateTime.Now,
-                    LastChangePasswordDate = DateTime.Now.Subtract(TimeSpan.FromDays(14)),
+                    LastChangePasswordDate =
+                    DateTime.Now.Subtract(TimeSpan.FromDays(14)),
                 },
                 new User
                 {
                     Login = "xyz",
                     Password = "zyx",
-                    LastInteractionDate = DateTime.Now.Subtract(TimeSpan.FromDays(31)),
+                    LastInteractionDate =
+                    DateTime.Now.Subtract(TimeSpan.FromDays(31)),
                     LastChangePasswordDate = DateTime.Now,
                 },
                 new User
@@ -42,16 +44,36 @@ namespace WorldYachtsDesktopApp.Services
 
         public async Task AddUserAsync(User user)
         {
-            await Task.Run(() => users.Add(user));
+            await Task.Run(() =>
+            {
+                users.Add(user);
+            });
         }
 
-        public async Task<User> GetUserByLoginPasswordAsync(string login, string password)
+        public void Dispose()
+        {
+            users = null;
+        }
+
+        public async Task<User> GetUserByLoginPasswordAsync(string login,
+                                                            string password)
         {
             return await Task.Run(() =>
             {
-                return users.FirstOrDefault(u => u.Login.ToLower()
-                    == login.ToLower() && u.Password == password);
+                return users.FirstOrDefault(u =>
+                u.Login.Equals(login, StringComparison.OrdinalIgnoreCase)
+                && u.Password == password);
             });
+        }
+
+        public async Task<bool> IsExistsAsync(string login)
+        {
+            bool isExists = users.Any(u =>
+            {
+                return u.Login.Equals(login,
+                                      StringComparison.OrdinalIgnoreCase);
+            });
+            return await Task.FromResult(isExists);
         }
 
         public Task SaveChangesAsync()

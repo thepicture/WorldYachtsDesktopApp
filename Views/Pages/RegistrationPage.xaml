@@ -15,15 +15,15 @@
             <StackPanel Orientation="Horizontal">
                 <Label Content="Роль" />
                 <ComboBox Name="Role"
-                          DisplayMemberPath="RoleTitle" />
+                          DisplayMemberPath="RoleTitle"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Логин" />
-                <TextBox Name="Login" />
+                <TextBox Name="Login"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Пароль" />
-                <PasswordBox Name="Password" />
+                <PasswordBox Name="Password"/>
             </StackPanel>
             <Button Content="Ввести нового пользователя"
                     Click="PerformRegistrationAsync"

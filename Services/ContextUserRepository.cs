@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using WorldYachtsDesktopApp.Models.Entities;
@@ -7,33 +9,62 @@ namespace WorldYachtsDesktopApp.Services
 {
     public class ContextUserRepository : IUserRepository
     {
+        private bool disposedValue;
+        private WorldYachtsBaseEntities context;
+
+        public ContextUserRepository()
+        {
+            Task.Run(() => context = new WorldYachtsBaseEntities());
+        }
+
         public async Task AddUserAsync(User user)
         {
-            using (WorldYachtsBaseEntities context = new WorldYachtsBaseEntities())
+            await Task.Run(() =>
             {
-                _ = await Task.Run(() =>
-                  {
-                      return context.User.Add(user);
-                  });
-            }
+                return context.User.Add(user);
+            });
         }
 
-        public async Task<User> GetUserByLoginPasswordAsync(string login, string password)
+        public async Task<User> GetUserByLoginPasswordAsync(string login,
+                                                            string password)
         {
-            using (WorldYachtsBaseEntities context = new WorldYachtsBaseEntities())
+            List<User> users = await context.User.ToListAsync();
+            return await Task.Run(() =>
             {
-                return await Task.Run(() =>
+                return users.FirstOrDefault(u =>
+                         u.Login.Equals(login, StringComparison.OrdinalIgnoreCase)
+                         && u.Password == password);
+            });
+        }
+
+        public async Task<bool> IsExistsAsync(string login)
+        {
+            return await context.User.AnyAsync(u => u.Login == login);
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await context.SaveChangesAsync();
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
                 {
-                    return context.User.ToList().FirstOrDefault(u =>
-                    u.Login.Equals(login, StringComparison.OrdinalIgnoreCase)
-                    && u.Password == password);
-                });
+                    context.Dispose();
+                }
+
+                context = null;
+                disposedValue = true;
             }
         }
 
-        public Task SaveChangesAsync()
+        public void Dispose()
         {
-            throw new NotImplementedException();
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }
