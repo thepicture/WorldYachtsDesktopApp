@@ -27,6 +27,7 @@
                    Style="{StaticResource HeaderLabel}"></Label>
         </Grid>
         <Frame Grid.Row="1"
+               NavigationUIVisibility="Hidden"
                Name="MainFrame"></Frame>
         <Grid Grid.Row="2"
               Background="{StaticResource FirstAdditionalColor}"

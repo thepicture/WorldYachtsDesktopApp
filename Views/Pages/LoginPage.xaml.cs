@@ -48,5 +48,13 @@ namespace WorldYachtsDesktopApp.Views.Pages
                 App.Current.Shutdown();
             }
         }
+
+        /// <summary>
+        /// Перейти к странице ввода нового пользователя.
+        /// </summary>
+        private void NavigateToRegistrationPage(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new RegistrationPage());
+        }
     }
 }
