@@ -15,11 +15,13 @@ namespace WorldYachtsDesktopAppTests
         [TestInitialize]
         public void TestInitialize()
         {
-            _service = new UserAuthenticatonService(null, null, new StubUserRepository());
+            _service = new UserAuthenticatonService(owner: null,
+                                                    blocker: null,
+                                                    repository: new StubUserRepository());
         }
 
         [TestMethod]
-        public async Task LoginAsync_SuccessfulLogin_ReasonIsOk()
+        public async Task LoginAsync_SuccessfulLogin_ReturnsOkLoginResponse()
         {
             // Arrange.
             Type expected = typeof(OkLoginResponse);
@@ -32,7 +34,7 @@ namespace WorldYachtsDesktopAppTests
         }
 
         [TestMethod]
-        public async Task LoginAsync_IncorrectLoginAndPassword_ReasonIsIncorrect()
+        public async Task LoginAsync_IncorrectLoginAndPassword_ReturnsIncorrectLoginResponse()
         {
             // Arrange.
             Type expected = typeof(IncorrectLoginResponse);
@@ -45,7 +47,7 @@ namespace WorldYachtsDesktopAppTests
         }
 
         [TestMethod]
-        public async Task LoginAsync_CorrectLoginIncorrectPassword_ReasonIsIncorrect()
+        public async Task LoginAsync_CorrectLoginIncorrectPassword_ReturnsIncorrectLoginResponse()
         {
             // Arrange.
             Type expected = typeof(IncorrectLoginResponse);
@@ -58,7 +60,7 @@ namespace WorldYachtsDesktopAppTests
         }
 
         [TestMethod]
-        public async Task LoginAsync_IncorrectLoginCorrectPassword_ReasonIsIncorrect()
+        public async Task LoginAsync_IncorrectLoginCorrectPassword_ReturnsIncorrectLoginResponse()
         {
             // Arrange.
             Type expected = typeof(IncorrectLoginResponse);
@@ -150,7 +152,7 @@ namespace WorldYachtsDesktopAppTests
         }
 
         [TestMethod]
-        public async Task LoginAsync_LoginToOneMonthAccount_AccountIsBlocked()
+        public async Task LoginAsync_LoginToOneMonthAccount_ReturnsBlockedLoginResponse()
         {
             // Arrange.
             Type expected = typeof(BlockedLoginResponse);
@@ -163,7 +165,7 @@ namespace WorldYachtsDesktopAppTests
         }
 
         [TestMethod]
-        public async Task LoginAsync_LoginCaseDoesNotMatch_ReasonIsOk()
+        public async Task LoginAsync_LoginCaseDoesNotMatch_ReturnsOkLoginResponse()
         {
             // Arrange.
             Type expected = typeof(OkLoginResponse);
@@ -176,12 +178,25 @@ namespace WorldYachtsDesktopAppTests
         }
 
         [TestMethod]
-        public async Task LoginAsync_LoginCaseDoesNotMatch_ReasonOkButChangePasswordResponse()
+        public async Task LoginAsync_LoginTo14PasswordUnchangedAccount_ReturnsOkButChangePasswordResponse()
         {
             // Arrange.
             Type expected = typeof(OkButChangePasswordResponse);
             string login = "abc";
             string password = "cba";
+            // Act.
+            ILoginResponse actual = await _service.LoginAsync(login, password);
+            // Assert.
+            Assert.IsInstanceOfType(actual, expected);
+        }
+
+        [TestMethod]
+        public async Task LoginAsync_PasswordCaseDoesNotMatch_ReturnsIncorrectLoginResponse()
+        {
+            // Arrange.
+            Type expected = typeof(IncorrectLoginResponse);
+            string login = "abc";
+            string password = "cBa";
             // Act.
             ILoginResponse actual = await _service.LoginAsync(login, password);
             // Assert.
