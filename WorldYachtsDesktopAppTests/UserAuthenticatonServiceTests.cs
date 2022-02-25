@@ -15,7 +15,7 @@ namespace WorldYachtsDesktopAppTests
         [TestInitialize]
         public void TestInitialize()
         {
-            _service = new UserAuthenticatonService();
+            _service = new UserAuthenticatonService(null, null, new StubUserRepository());
         }
 
         [TestMethod]

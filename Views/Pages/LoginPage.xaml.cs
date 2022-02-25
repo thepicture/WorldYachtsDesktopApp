@@ -10,8 +10,7 @@ namespace WorldYachtsDesktopApp.Views.Pages
     /// </summary>
     public partial class LoginPage : Page
     {
-        private readonly IAuthenticationService authenticationService =
-            new UserAuthenticatonService();
+        private readonly IAuthenticationService authenticationService;
         private readonly IFeedbackService feedbackService =
             new MessageBoxFeedbackService();
 
@@ -19,6 +18,9 @@ namespace WorldYachtsDesktopApp.Views.Pages
         public LoginPage()
         {
             InitializeComponent();
+            authenticationService = new UserAuthenticatonService(this,
+                                                                 new UIElementTimeoutBlocker(),
+                                                                 new ContextUserRepository());
         }
 
         /// <summary>

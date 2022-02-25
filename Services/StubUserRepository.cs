@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using WorldYachtsDesktopApp.Models.Entities;
 
 namespace WorldYachtsDesktopApp.Services
 {
-    public class StubLoginProvider : ILoginProvider<User>
+    public class StubUserRepository : IUserRepository
     {
-        public async Task<IEnumerable<User>> GetAllAsync()
-        {
-            return await Task.FromResult<IEnumerable<User>>(new List<User>
+        private readonly IList<User> users = new List<User>
             {
                 new User
                 {
@@ -39,28 +38,25 @@ namespace WorldYachtsDesktopApp.Services
                     LastInteractionDate = DateTime.Now,
                     LastChangePasswordDate = DateTime.Now,
                 },
+            };
+
+        public async Task AddUserAsync(User user)
+        {
+            await Task.Run(() => users.Add(user));
+        }
+
+        public async Task<User> GetUserByLoginPasswordAsync(string login, string password)
+        {
+            return await Task.Run(() =>
+            {
+                return users.FirstOrDefault(u => u.Login.ToLower()
+                    == login.ToLower() && u.Password == password);
             });
         }
 
-        #region IDisposable Support
-        private bool disposedValue = false;
-
-        protected virtual void Dispose(bool disposing)
+        public Task SaveChangesAsync()
         {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                }
-
-                disposedValue = true;
-            }
+            throw new NotImplementedException();
         }
-
-        public void Dispose()
-        {
-            Dispose(true);
-        }
-        #endregion
     }
 }
