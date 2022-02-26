@@ -28,7 +28,9 @@ namespace WorldYachtsDesktopApp.Services
         public async Task<User> GetUserByLoginPasswordAsync(string login,
                                                             string password)
         {
-            List<User> users = await context.User.ToListAsync();
+            List<User> users = await context.User
+                .AsNoTracking()
+                .ToListAsync();
             return await Task.Run(() =>
             {
                 return users.FirstOrDefault(u =>
