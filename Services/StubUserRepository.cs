@@ -8,7 +8,7 @@ namespace WorldYachtsDesktopApp.Services
 {
     public class StubUserRepository : IUserRepository
     {
-        private IList<User> users = new List<User>
+        private readonly IList<User> users = new List<User>
             {
                 new User
                 {
@@ -49,12 +49,6 @@ namespace WorldYachtsDesktopApp.Services
                 users.Add(user);
             });
         }
-
-        public void Dispose()
-        {
-            users = null;
-        }
-
         public async Task<User> GetUserByLoginPasswordAsync(string login,
                                                             string password)
         {
@@ -74,11 +68,6 @@ namespace WorldYachtsDesktopApp.Services
                                       StringComparison.OrdinalIgnoreCase);
             });
             return await Task.FromResult(isExists);
-        }
-
-        public Task SaveChangesAsync()
-        {
-            throw new NotImplementedException();
         }
     }
 }

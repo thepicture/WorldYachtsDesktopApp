@@ -87,10 +87,9 @@ namespace WorldYachtsDesktopApp.Views.Pages
                 LastChangePasswordDate = DateTime.Now,
             };
 
-            await repository.AddUserAsync(user);
             try
             {
-                await repository.SaveChangesAsync();
+                await repository.AddUserAsync(user);
             }
             catch (Exception ex)
             {

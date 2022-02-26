@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using WorldYachtsDesktopApp.Models.LoginModels;
 using WorldYachtsDesktopApp.Services;
@@ -18,16 +19,19 @@ namespace WorldYachtsDesktopApp.Views.Pages
         public LoginPage()
         {
             InitializeComponent();
-            authenticationService = new UserAuthenticatonService(this,
-                                                                 new UIElementTimeoutBlocker(),
-                                                                 new ContextUserRepository());
+            authenticationService =
+                new UserAuthenticatonService(this,
+                                             new UIElementTimeoutBlocker(),
+                                             new ContextUserRepository());
         }
 
         /// <summary>
         /// Выполнить аутентификацию.
         /// </summary>
-        private async void PerformAuthenticationAsync(object sender, RoutedEventArgs e)
+        private async void PerformAuthenticationAsync(object sender,
+                                                      RoutedEventArgs e)
         {
+            await Task.Yield();
             ILoginResponse response = await authenticationService
                 .LoginAsync(Login.Text,
                             Password.Password);
@@ -43,7 +47,8 @@ namespace WorldYachtsDesktopApp.Views.Pages
         /// </summary>
         private async void PerformExitAsync(object sender, RoutedEventArgs e)
         {
-            if (await feedbackService.AskAsync("Действительно выключить приложение?"))
+            if (await feedbackService.AskAsync("Действительно "
+                                               + "выключить приложение?"))
             {
                 App.Current.Shutdown();
             }
@@ -52,7 +57,8 @@ namespace WorldYachtsDesktopApp.Views.Pages
         /// <summary>
         /// Перейти к странице ввода нового пользователя.
         /// </summary>
-        private void NavigateToRegistrationPage(object sender, RoutedEventArgs e)
+        private void NavigateToRegistrationPage(object sender,
+                                                RoutedEventArgs e)
         {
             NavigationService.Navigate(new RegistrationPage());
         }

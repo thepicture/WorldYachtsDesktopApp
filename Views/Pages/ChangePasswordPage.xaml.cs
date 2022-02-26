@@ -43,7 +43,8 @@ namespace WorldYachtsDesktopApp.Views.Pages
                     using (WorldYachtsBaseEntities context =
                     new WorldYachtsBaseEntities())
                     {
-                        User user = context.User.Find((App.Current as App).User.UserId);
+                        User user = context.User
+                        .Find((App.Current as App).User.UserId);
                         user.Password = NewPassword.Password;
                         user.LastChangePasswordDate = DateTime.Now;
                         user.LastInteractionDate = DateTime.Now;

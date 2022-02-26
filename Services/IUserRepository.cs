@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using WorldYachtsDesktopApp.Models.Entities;
 
 namespace WorldYachtsDesktopApp.Services
@@ -7,11 +6,10 @@ namespace WorldYachtsDesktopApp.Services
     /// <summary>
     /// Определяет репозиторий для работы с пользователями.
     /// </summary>
-    public interface IUserRepository : IDisposable
+    public interface IUserRepository
     {
         Task<User> GetUserByLoginPasswordAsync(string login, string password);
         Task AddUserAsync(User user);
-        Task SaveChangesAsync();
         Task<bool> IsExistsAsync(string login);
     }
 }
