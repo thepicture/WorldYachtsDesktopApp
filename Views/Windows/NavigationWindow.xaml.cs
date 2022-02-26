@@ -13,5 +13,13 @@ namespace WorldYachtsDesktopApp
             InitializeComponent();
             _ = MainFrame.Navigate(new LoginPage());
         }
+
+        /// <summary>
+        /// Перейти на предыдущую страницу.
+        /// </summary>
+        private void PerformGoBack(object sender, RoutedEventArgs e)
+        {
+            MainFrame.GoBack();
+        }
     }
 }

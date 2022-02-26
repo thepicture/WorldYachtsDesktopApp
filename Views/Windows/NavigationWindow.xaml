@@ -25,6 +25,23 @@
                    HorizontalAlignment="Left"></Image>
             <Label Content="{Binding ElementName=MainFrame, Path=Content.Title, FallbackValue=Окно навигации}"
                    Style="{StaticResource HeaderLabel}"></Label>
+            <Button Content="Назад"
+                    Click="PerformGoBack"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center">
+                <Button.Style>
+                    <Style TargetType="Button"
+                           BasedOn="{StaticResource {x:Type Button}}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=MainFrame, Path=CanGoBack}"
+                                         Value="False">
+                                <Setter Property="Visibility"
+                                        Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
         </Grid>
         <Frame Grid.Row="1"
                NavigationUIVisibility="Hidden"
