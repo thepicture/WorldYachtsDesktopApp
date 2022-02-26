@@ -96,6 +96,7 @@ namespace WorldYachtsDesktopApp.Views.Pages
                 return;
             }
             await feedbackService.InformAsync("Пользователь успешно введён");
+            NavigationService.GoBack();
         }
 
         private async void OnLoad(object sender, RoutedEventArgs e)
