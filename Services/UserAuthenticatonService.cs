@@ -48,6 +48,8 @@ namespace WorldYachtsDesktopApp.Services
                         return new BlockedLoginResponse();
                     }
 
+                    (App.Current as App).User = currentUser;
+
                     if (DateTime.Now.Subtract(currentUser.LastChangePasswordDate).TotalDays >= 14)
                     {
                         return new OkButChangePasswordResponse();

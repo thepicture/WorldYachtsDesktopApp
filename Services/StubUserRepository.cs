@@ -6,7 +6,7 @@ using WorldYachtsDesktopApp.Models.Entities;
 
 namespace WorldYachtsDesktopApp.Services
 {
-    public class StubUserRepository
+    public class StubUserRepository : IUserRepository
     {
         private IList<User> users = new List<User>
             {

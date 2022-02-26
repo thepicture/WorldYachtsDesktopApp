@@ -10,14 +10,35 @@ namespace WorldYachtsDesktopAppTests
     [TestClass]
     public class UserAuthenticatonServiceTests
     {
-        private IAuthenticationService _service;
+        private static IAuthenticationService service;
+#pragma warning disable IDE0052 // Remove unread private members
+        private static App app;
+#pragma warning restore IDE0052 // Remove unread private members
+
+        [ClassInitialize]
+        public static void ClassInitialize(TestContext testContext)
+        {
+            app = new App();
+        }
+
+        [ClassCleanup]
+        public static void ClassCleanup()
+        {
+            app = null;
+        }
 
         [TestInitialize]
         public void TestInitialize()
         {
-            _service = new UserAuthenticatonService(owner: null,
+            service = new UserAuthenticatonService(owner: null,
                                                     blocker: null,
                                                     repository: new StubUserRepository());
+        }
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            service = null;
         }
 
         [TestMethod]
@@ -28,7 +49,7 @@ namespace WorldYachtsDesktopAppTests
             string login = "123";
             string password = "321";
             // Act.
-            ILoginResponse actual = await _service.LoginAsync(login, password);
+            ILoginResponse actual = await service.LoginAsync(login, password);
             // Assert.
             Assert.IsInstanceOfType(actual, expected);
         }
@@ -41,7 +62,7 @@ namespace WorldYachtsDesktopAppTests
             string login = "___";
             string password = "___";
             // Act.
-            ILoginResponse actual = await _service.LoginAsync(login, password);
+            ILoginResponse actual = await service.LoginAsync(login, password);
             // Assert.
             Assert.IsInstanceOfType(actual, expected);
         }
@@ -54,7 +75,7 @@ namespace WorldYachtsDesktopAppTests
             string login = "122";
             string password = "___";
             // Act.
-            ILoginResponse actual = await _service.LoginAsync(login, password);
+            ILoginResponse actual = await service.LoginAsync(login, password);
             // Assert.
             Assert.IsInstanceOfType(actual, expected);
         }
@@ -67,7 +88,7 @@ namespace WorldYachtsDesktopAppTests
             string login = "___";
             string password = "321";
             // Act.
-            ILoginResponse actual = await _service.LoginAsync(login, password);
+            ILoginResponse actual = await service.LoginAsync(login, password);
             // Assert.
             Assert.IsInstanceOfType(actual, expected);
         }
@@ -78,7 +99,7 @@ namespace WorldYachtsDesktopAppTests
             // Arrange.
             TimeSpan expected = TimeSpan.Zero;
             // Act.
-            TimeSpan actual = _service.BlockTime;
+            TimeSpan actual = service.BlockTime;
             // Assert.
             Assert.AreEqual(expected, actual);
         }
@@ -91,8 +112,8 @@ namespace WorldYachtsDesktopAppTests
             string login = "123";
             string password = "321";
             // Act.
-            _ = await _service.LoginAsync(login, password);
-            TimeSpan actual = _service.BlockTime;
+            _ = await service.LoginAsync(login, password);
+            TimeSpan actual = service.BlockTime;
             // Assert.
             Assert.AreEqual(expected, actual);
         }
@@ -107,9 +128,9 @@ namespace WorldYachtsDesktopAppTests
             // Act.
             for (int i = 0; i < 3; i++)
             {
-                _ = await _service.LoginAsync(login, password);
+                _ = await service.LoginAsync(login, password);
             }
-            TimeSpan actual = _service.BlockTime;
+            TimeSpan actual = service.BlockTime;
             // Assert.
             Assert.AreEqual(expected, actual);
         }
@@ -124,9 +145,9 @@ namespace WorldYachtsDesktopAppTests
             // Act.
             for (int i = 0; i < 4; i++)
             {
-                _ = await _service.LoginAsync(login, password);
+                _ = await service.LoginAsync(login, password);
             }
-            TimeSpan actual = _service.BlockTime;
+            TimeSpan actual = service.BlockTime;
             // Assert.
             Assert.AreEqual(expected, actual);
         }
@@ -141,12 +162,12 @@ namespace WorldYachtsDesktopAppTests
             // Act.
             for (int i = 0; i < 4; i++)
             {
-                _ = await _service.LoginAsync(login, password);
+                _ = await service.LoginAsync(login, password);
             }
             login = "123";
             password = "321";
-            _ = await _service.LoginAsync(login, password);
-            TimeSpan actual = _service.BlockTime;
+            _ = await service.LoginAsync(login, password);
+            TimeSpan actual = service.BlockTime;
             // Assert.
             Assert.AreEqual(expected, actual);
         }
@@ -159,7 +180,7 @@ namespace WorldYachtsDesktopAppTests
             string login = "xyz";
             string password = "zyx";
             // Act.
-            ILoginResponse actual = await _service.LoginAsync(login, password);
+            ILoginResponse actual = await service.LoginAsync(login, password);
             // Assert.
             Assert.IsInstanceOfType(actual, expected);
         }
@@ -172,7 +193,7 @@ namespace WorldYachtsDesktopAppTests
             string login = "CdE";
             string password = "123";
             // Act.
-            ILoginResponse actual = await _service.LoginAsync(login, password);
+            ILoginResponse actual = await service.LoginAsync(login, password);
             // Assert.
             Assert.IsInstanceOfType(actual, expected);
         }
@@ -185,7 +206,7 @@ namespace WorldYachtsDesktopAppTests
             string login = "abc";
             string password = "cba";
             // Act.
-            ILoginResponse actual = await _service.LoginAsync(login, password);
+            ILoginResponse actual = await service.LoginAsync(login, password);
             // Assert.
             Assert.IsInstanceOfType(actual, expected);
         }
@@ -198,7 +219,7 @@ namespace WorldYachtsDesktopAppTests
             string login = "abc";
             string password = "cBa";
             // Act.
-            ILoginResponse actual = await _service.LoginAsync(login, password);
+            ILoginResponse actual = await service.LoginAsync(login, password);
             // Assert.
             Assert.IsInstanceOfType(actual, expected);
         }

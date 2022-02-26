@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using WorldYachtsDesktopApp.Models.LoginModels;
 using WorldYachtsDesktopApp.Services;
+using WorldYachtsDesktopApp.Views.Pages;
 
 namespace WorldYachtsDesktopApp
 {
@@ -13,6 +14,7 @@ namespace WorldYachtsDesktopApp
             await feedbackService.InformAsync("Пользователь не менял пароль " +
                        "в течении 14 дней. " +
                        "Сейчас появится форма для смены пароля");
+            (App.Current.MainWindow as NavigationWindow).MainFrame.Navigate(new ChangePasswordPage());
         }
     }
 }

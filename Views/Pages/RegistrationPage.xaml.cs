@@ -25,6 +25,10 @@ namespace WorldYachtsDesktopApp.Views.Pages
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Получить роли пользователей.
+        /// </summary>
+        /// <returns></returns>
         private async Task<List<Role>> GetRolesAsync()
         {
             return await Task.Run(() =>
