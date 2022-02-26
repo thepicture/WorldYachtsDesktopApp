@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using WorldYachtsDesktopApp.Models.Entities;
@@ -28,6 +29,7 @@ namespace WorldYachtsDesktopApp.Services
                 {
                     return context.User
                         .AsNoTracking()
+                        .Include(u => u.Role)
                         .ToList()
                         .FirstOrDefault(u =>
                              u.Login.Equals(login, StringComparison.OrdinalIgnoreCase)

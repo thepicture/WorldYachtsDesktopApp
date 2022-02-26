@@ -38,7 +38,10 @@ namespace WorldYachtsDesktopApp.Views.Pages
             await response.ExplainToAsync();
             if (response is OkLoginResponse)
             {
-
+                if ((App.Current as App).User.Role.RoleTitle == "Administrator")
+                {
+                    NavigationService.Navigate(new AdminPage());
+                }
             }
         }
 
