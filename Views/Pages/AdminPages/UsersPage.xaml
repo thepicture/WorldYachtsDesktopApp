@@ -19,7 +19,8 @@
             <Button Content="Добавить" />
         </StackPanel>
         <DataGrid Grid.Row="1"
-                  x:Name="UsersGrid">
+                  x:Name="UsersGrid"
+                  ColumnWidth="*">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Логин"
                                     Binding="{Binding Login}" />
@@ -44,6 +45,14 @@
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Удалить" 
+                                    Click="OnUserDelete"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
