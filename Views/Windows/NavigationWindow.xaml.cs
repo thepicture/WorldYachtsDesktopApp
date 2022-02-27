@@ -59,7 +59,7 @@ namespace WorldYachtsDesktopApp
             }
             else
             {
-                if (MainFrame.BackStack.Cast<JournalEntry>().Count() < 3)
+                if (MainFrame.BackStack.Cast<JournalEntry>().Count() < 2)
                     GoBack.Visibility = Visibility.Collapsed;
                 else
                     GoBack.Visibility = Visibility.Visible;

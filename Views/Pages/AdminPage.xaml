@@ -18,7 +18,8 @@
                             Value="auto" />
                 </Style>
             </StackPanel.Resources>
-            <Button Content="Управление пользователями" />
+            <Button Content="Управление пользователями"
+                    Click="PerformGoToUsersPage"/>
             <Button Content="Управление производством продукции" />
             <Button Content="Управление ценами" />
         </StackPanel>

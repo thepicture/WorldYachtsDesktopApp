@@ -181,4 +181,16 @@
         <Setter Property="Height"
                 Value="auto" />
     </Style>
+
+    <Style TargetType="DataGrid"
+           BasedOn="{StaticResource {x:Type FrameworkElement}}">
+        <Setter Property="AutoGenerateColumns"
+                Value="False" />
+        <Setter Property="IsReadOnly"
+                Value="True" />
+        <Setter Property="Width"
+                Value="auto" />
+        <Setter Property="Height"
+                Value="auto" />
+    </Style>
 </ResourceDictionary>

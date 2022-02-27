@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
+using WorldYachtsDesktopApp.Views.Pages.AdminPages;
 
 namespace WorldYachtsDesktopApp.Views.Pages
 {
@@ -10,6 +12,14 @@ namespace WorldYachtsDesktopApp.Views.Pages
         public AdminPage()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Произвести навигацию на страницу управления пользователями.
+        /// </summary>
+        private void PerformGoToUsersPage(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new UsersPage());
         }
     }
 }
