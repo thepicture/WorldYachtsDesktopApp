@@ -186,8 +186,6 @@
            BasedOn="{StaticResource {x:Type FrameworkElement}}">
         <Setter Property="AutoGenerateColumns"
                 Value="False" />
-        <Setter Property="IsReadOnly"
-                Value="True" />
         <Setter Property="Width"
                 Value="auto" />
         <Setter Property="Height"

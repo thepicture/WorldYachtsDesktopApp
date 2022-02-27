@@ -17,6 +17,8 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
     {
         private readonly IFeedbackService feedbackService =
             new MessageBoxFeedbackService();
+        private readonly IUserRepository userRepository =
+            new ContextUserRepository();
         public UsersPage()
         {
             InitializeComponent();
@@ -50,6 +52,9 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
             });
         }
 
+        /// <summary>
+        /// Вызывается в момент удаления пользователя.
+        /// </summary>
         private async void OnUserDelete(object sender, RoutedEventArgs e)
         {
             User user = (sender as Button).DataContext as User;
@@ -76,6 +81,92 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
             }
             catch (Exception ex)
             {
+                Debug.WriteLine(ex.StackTrace);
+                await feedbackService.InformErrorAsync("Не удалось "
+                                                       + "удалить пользователя. "
+                                                       + "Попробуйте ещё раз");
+            }
+        }
+
+        /// <summary>
+        /// Вызывается в момент завершения редактирования данных пользователя.
+        /// </summary>
+        private async void OnRowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            User user = e.Row.DataContext as User;
+
+            if (user.UserId == 0)
+            {
+                if (!await feedbackService
+               .AskAsync($"Вы добавили нового пользователя. Сохранить его?"))
+                {
+                    await LoadUsers();
+                    return;
+                }
+                else
+                {
+                    await AddNewUser(user);
+                    return;
+                }
+            }
+
+            if (!await feedbackService
+                .AskAsync($"Вы изменили данные пользователя. Сохранить их?"))
+            {
+                await LoadUsers();
+                return;
+            }
+
+            try
+            {
+                await Task.Run(() =>
+                {
+                    using (WorldYachtsBaseEntities context =
+                    new WorldYachtsBaseEntities())
+                    {
+                        User userFromDatabase = context.User.Find(user.UserId);
+                        context
+                        .Entry(userFromDatabase)
+                        .CurrentValues
+                        .SetValues(user);
+                        context.SaveChanges();
+                    }
+                });
+                await feedbackService
+                    .InformAsync($"Пользователь {user.Login} изменён");
+                await LoadUsers();
+            }
+            catch (Exception ex)
+            {
+                await feedbackService.InformErrorAsync("Не удалось "
+                                                       + "изменить данные. "
+                                                       + "Попробуйте ещё раз");
+                Debug.WriteLine(ex.StackTrace);
+            }
+        }
+
+        /// <summary>
+        /// Добавить нового пользователя.
+        /// </summary>
+        /// <param name="user">Пользователь.</param>
+        /// <returns></returns>
+        private async Task AddNewUser(User user)
+        {
+            user.LastChangePasswordDate = DateTime.Now;
+            user.LastInteractionDate = DateTime.Now;
+            user.RoleId = 3;
+            try
+            {
+                await userRepository.AddUserAsync(user);
+                await LoadUsers();
+                await feedbackService
+                    .InformAsync($"Пользователь {user.Login} добавлен");
+            }
+            catch (Exception ex)
+            {
+                await feedbackService.InformErrorAsync("Не удалось "
+                                                                      + "добавить пользователя. "
+                                                                      + "Попробуйте ещё раз");
                 Debug.WriteLine(ex.StackTrace);
             }
         }

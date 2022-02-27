@@ -10,46 +10,47 @@
       Title="Управление пользователями"
       Loaded="OnLoaded">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Center">
-            <Button Content="Добавить" />
-        </StackPanel>
         <DataGrid Grid.Row="1"
                   x:Name="UsersGrid"
-                  ColumnWidth="*">
+                  ColumnWidth="*"
+                  RowEditEnding="OnRowEditEnding">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Логин"
-                                    Binding="{Binding Login}" />
+                                    Binding="{Binding Login, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="Пароль"
+                                    Binding="{Binding Password, UpdateSourceTrigger=PropertyChanged}" />
                 <DataGridTextColumn Header="Роль"
-                                    Binding="{Binding Role.RoleTitle}" />
-                <DataGridTextColumn Header="Последняя дата активности"
-                                    Binding="{Binding LastInteractionDate, StringFormat={}{0:dd-MM-yyyy hh:mm}}" />
-                <DataGridTextColumn Header="Последняя дата изменения пароля"
-                                    Binding="{Binding LastChangePasswordDate, StringFormat={}{0:dd-MM-yyyy hh:mm}}" />
-                <DataGridTextColumn Header="Заблокирован?">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="{x:Type TextBlock}">
-                            <Setter Property="Text"
-                                    Value="Да" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsBlocked}"
-                                             Value="False">
-                                    <Setter Property="TextBlock.Text"
-                                            Value="Нет" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-                <DataGridTemplateColumn>
+                                    IsReadOnly="True"
+                                    Binding="{Binding Role.RoleTitle, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTemplateColumn Header="Последняя дата активности">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Удалить" 
-                                    Click="OnUserDelete"/>
+                            <DatePicker SelectedDate="{Binding LastInteractionDate, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Последняя дата изменения пароля">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding LastChangePasswordDate, UpdateSourceTrigger=PropertyChanged}"
+                                        Width="auto"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Заблокирован?">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding IsBlocked, UpdateSourceTrigger=PropertyChanged}"
+                                      Width="auto"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Действие">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Удалить"
+                                    Width="auto"
+                                    Click="OnUserDelete" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
