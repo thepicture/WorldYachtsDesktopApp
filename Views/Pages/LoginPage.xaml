@@ -21,6 +21,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Button Content="Авторизоваться"
+                        IsDefault="True"
                         Click="PerformAuthenticationAsync"></Button>
                 <Button Content="Выйти из приложения"
                         Click="PerformExitAsync"></Button>

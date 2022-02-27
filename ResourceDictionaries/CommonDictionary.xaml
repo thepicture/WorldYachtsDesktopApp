@@ -12,10 +12,10 @@
     <BitmapImage x:Key="CompanyLogo"
                  UriSource="/Resources/logo.png"></BitmapImage>
 
-    <DropShadowEffect x:Key="CommonShadow" 
+    <DropShadowEffect x:Key="CommonShadow"
                       Direction="270"
                       BlurRadius="15"
-                      Opacity=".2"/>
+                      Opacity=".2" />
 
     <Style TargetType="FrameworkElement">
         <Setter Property="Margin"
@@ -24,10 +24,97 @@
                 Value="200" />
         <Setter Property="Height"
                 Value="20" />
+        <Style.Resources>
+            <Style TargetType="Border">
+                <Setter Property="BorderBrush"
+                        Value="Green" />
+                <Setter Property="BorderThickness"
+                        Value="30" />
+            </Style>
+        </Style.Resources>
     </Style>
+
+    <ControlTemplate x:Key="ButtonBaseControl"
+                     TargetType="{x:Type ButtonBase}">
+        <Border x:Name="border"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                Background="{TemplateBinding Background}"
+                SnapsToDevicePixels="True">
+            <ContentPresenter x:Name="contentPresenter"
+                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                              Content="{TemplateBinding Content}"
+                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                              Focusable="False"
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              Margin="{TemplateBinding Padding}"
+                              RecognizesAccessKey="True"
+                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="Button.IsDefaulted"
+                     Value="True">
+                <Setter Property="BorderBrush"
+                        TargetName="border"
+                        Value="Red" />
+            </Trigger>
+            <Trigger Property="IsMouseOver"
+                     Value="True">
+                <Setter Property="Background"
+                        TargetName="border"
+                        Value="#FFBEE6FD" />
+                <Setter Property="BorderBrush"
+                        TargetName="border"
+                        Value="#FF3C7FB1" />
+            </Trigger>
+            <Trigger Property="IsPressed"
+                     Value="True">
+                <Setter Property="Background"
+                        TargetName="border"
+                        Value="#FFC4E5F6" />
+                <Setter Property="BorderBrush"
+                        TargetName="border"
+                        Value="#FF2C628B" />
+            </Trigger>
+            <Trigger Property="ToggleButton.IsChecked"
+                     Value="True">
+                <Setter Property="Background"
+                        TargetName="border"
+                        Value="#FFBCDDEE" />
+                <Setter Property="BorderBrush"
+                        TargetName="border"
+                        Value="#FF245A83" />
+            </Trigger>
+            <Trigger Property="IsEnabled"
+                     Value="False">
+                <Setter Property="Background"
+                        TargetName="border"
+                        Value="#FFF4F4F4" />
+                <Setter Property="BorderBrush"
+                        TargetName="border"
+                        Value="#FFADB2B5" />
+                <Setter Property="Foreground"
+                        Value="#FF838383" />
+            </Trigger>
+            <Trigger Property="IsFocused"
+                     Value="True">
+                <Setter Property="BorderBrush"
+                        TargetName="border"
+                        Value="red" />
+                <Setter Property="Background"
+                        TargetName="border"
+                        Value="{StaticResource ResourceKey=ThirdAdditionalColor}" />
+                <Setter Property="Foreground"
+                        Value="Black" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
 
     <Style TargetType="Button"
            BasedOn="{StaticResource {x:Type FrameworkElement}}">
+        <Setter Property="Template"
+                Value="{StaticResource ButtonBaseControl}" />
         <Setter Property="Background"
                 Value="{StaticResource FirstMainColor}" />
         <Setter Property="Foreground"

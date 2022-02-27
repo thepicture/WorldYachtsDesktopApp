@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:WorldYachtsDesktopApp"
              StartupUri="Views/Windows/NavigationWindow.xaml">
     <Application.Resources>
-        <ResourceDictionary Source="./ResourceDictionaries/CommonDictionary.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="./ResourceDictionaries/CommonDictionary.xaml" />
     </Application.Resources>
 </Application>
