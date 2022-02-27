@@ -2,9 +2,11 @@
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using WorldYachtsDesktopApp.Models.Entities;
 using WorldYachtsDesktopApp.Services;
 
@@ -116,6 +118,13 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
                 await LoadUsers();
                 return;
             }
+            Tuple<bool, string> validationResult = await CheckValidity(user);
+            if (!validationResult.Item1)
+            {
+                await feedbackService.WarnAsync(validationResult.Item2);
+                await LoadUsers();
+                return;
+            }
 
             try
             {
@@ -152,6 +161,13 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
         /// <returns></returns>
         private async Task AddNewUser(User user)
         {
+            Tuple<bool, string> validationResult = await CheckValidity(user);
+            if (!validationResult.Item1)
+            {
+                await feedbackService.WarnAsync(validationResult.Item2);
+                await LoadUsers();
+                return;
+            }
             user.LastChangePasswordDate = DateTime.Now;
             user.LastInteractionDate = DateTime.Now;
             user.RoleId = 3;
@@ -165,10 +181,50 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
             catch (Exception ex)
             {
                 await feedbackService.InformErrorAsync("Не удалось "
-                                                                      + "добавить пользователя. "
-                                                                      + "Попробуйте ещё раз");
+                                                       + "добавить пользователя. "
+                                                       + "Попробуйте ещё раз");
                 Debug.WriteLine(ex.StackTrace);
             }
+        }
+
+        private async Task<Tuple<bool, string>> CheckValidity(User user)
+        {
+            StringBuilder errors = new StringBuilder();
+            if (string.IsNullOrWhiteSpace(user.Login)
+                || user.Login.Length < 1
+                || user.Login.Length > 50)
+            {
+                errors.AppendLine("Логин - это обязательное текстовое поле "
+                                  + "до 50 символов");
+            }
+            else if ((user.UserId == 0
+                      && await userRepository.IsExistsAsync(user.Login))
+                     || (user.UserId != 0
+                    && UsersGrid.Items
+                    .Cast<object>()
+                    .Where(o => o != CollectionView.NewItemPlaceholder)
+                    .Cast<User>()
+                    .Where(u => u.UserId != user.UserId)
+                    .Any(u =>
+                    {
+                        return u.Login.ToLower() == user.Login.ToLower();
+                    })))
+            {
+                errors.AppendLine($"Пользователь {user.Login} "
+                                  + "в системе уже существует");
+            }
+            if (string.IsNullOrWhiteSpace(user.Password)
+              || user.Password.Length < 1
+              || user.Password.Length > 50)
+            {
+                errors.AppendLine("Пароль - это обязательное текстовое поле "
+                                  + "до 50 символов");
+            }
+
+            return await Task.FromResult(
+                Tuple.Create(errors.Length == 0,
+                errors.ToString())
+                );
         }
     }
 }
