@@ -109,28 +109,46 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
         /// </summary>
         private async void OnRowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
+            Boat boat = e.Row.DataContext as Boat;
+            string reason = boat.BoatId == 0
+                ? "добавление"
+                : "изменение";
             if (!await feedbackService.AskAsync("Вы завершили " +
-                "изменение лодки. Применить изменения?"))
+                $"{reason} лодки. Применить изменения?"))
             {
                 BoatsGrid.ItemsSource = await GetBoats();
                 return;
             }
-            Boat boat = e.Row.DataContext as Boat;
             try
             {
-                await Task.Run(() =>
+                if (boat.BoatId == 0)
                 {
-                    using (WorldYachtsBaseEntities context =
-                    new WorldYachtsBaseEntities())
+                    await Task.Run(() =>
                     {
-                        context.Entry(
-                            context.Boat.Find(boat.BoatId)
-                            )
-                        .CurrentValues
-                        .SetValues(boat);
-                        context.SaveChanges();
-                    }
-                });
+                        using (WorldYachtsBaseEntities context =
+                        new WorldYachtsBaseEntities())
+                        {
+                            context.Boat.Add(boat);
+                            context.SaveChanges();
+                        }
+                    });
+                }
+                else
+                {
+                    await Task.Run(() =>
+                    {
+                        using (WorldYachtsBaseEntities context =
+                        new WorldYachtsBaseEntities())
+                        {
+                            context.Entry(
+                                context.Boat.Find(boat.BoatId)
+                                )
+                            .CurrentValues
+                            .SetValues(boat);
+                            context.SaveChanges();
+                        }
+                    });
+                }
                 BoatsGrid.ItemsSource = await GetBoats();
                 await feedbackService.InformAsync("Лодка изменена");
             }
