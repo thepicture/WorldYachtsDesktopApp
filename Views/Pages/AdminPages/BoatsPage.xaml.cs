@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -110,6 +111,53 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
         private async void OnRowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
             Boat boat = e.Row.DataContext as Boat;
+
+            StringBuilder errors = new StringBuilder();
+            if (string.IsNullOrWhiteSpace(boat.Model) || boat.Model.Length > 50)
+            {
+                errors.AppendLine("Наименование лодки - это обязательное " +
+                    "поле до 50 символов");
+            }
+            if (!int.TryParse(
+                boat.NumberOfRowers.ToString(), out _
+                              )
+                || int.Parse(
+                    boat.NumberOfRowers.ToString()
+                    ) < 1)
+            {
+                errors.AppendLine("Количество мест - это обязательное " +
+                    "целое положительное число");
+            }
+            if (string.IsNullOrWhiteSpace(boat.Colour) || boat.Colour.Length > 30)
+            {
+                errors.AppendLine("Цвет лодки - это обязательное " +
+                    "поле до 30 символов");
+            }
+            if (!decimal.TryParse(
+              boat.BasePrice.ToString(), out _
+                            )
+              || decimal.Parse(
+                  boat.BasePrice.ToString()
+                  ) <= 0)
+            {
+                errors.AppendLine("Цена лодки - " +
+                    "это положительное целое число в рублях");
+            }
+            if (boat.WoodId == 0)
+            {
+                errors.AppendLine("Укажите тип дерева");
+            }
+            if (boat.BoatTypeId == 0)
+            {
+                errors.AppendLine("Укажите тип лодки");
+            }
+            if (errors.Length > 0)
+            {
+                await feedbackService.WarnAsync(errors.ToString());
+                BoatsGrid.ItemsSource = await GetBoats();
+                return;
+            }
+
             string reason = boat.BoatId == 0
                 ? "добавление"
                 : "изменение";

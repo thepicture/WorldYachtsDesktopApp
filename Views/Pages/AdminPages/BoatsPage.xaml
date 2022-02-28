@@ -15,7 +15,7 @@
                   RowEditEnding="OnRowEditEnding">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Наименование товара"
-                                    Binding="{Binding Model}" />
+                                    Binding="{Binding Model, UpdateSourceTrigger=PropertyChanged}" />
                 <DataGridTextColumn Header="Номер для заказа"
                                     Binding="{Binding BoatId}" 
                                     IsReadOnly="True"/>
@@ -37,7 +37,7 @@
                     </DataGridComboBoxColumn.ElementStyle>
                 </DataGridComboBoxColumn>
                 <DataGridTextColumn Header="Количество мест для гребцов"
-                                    Binding="{Binding NumberOfRowers}" />
+                                    Binding="{Binding NumberOfRowers, UpdateSourceTrigger=PropertyChanged}" />
                 <DataGridComboBoxColumn Header="Сорта дерева"
                                         DisplayMemberPath="WoodTitle"
                                         SelectedValuePath="WoodId"
@@ -56,11 +56,11 @@
                     </DataGridComboBoxColumn.ElementStyle>
                 </DataGridComboBoxColumn>
                 <DataGridTextColumn Header="Цвет"
-                                    Binding="{Binding Colour}" />
+                                    Binding="{Binding Colour, UpdateSourceTrigger=PropertyChanged}" />
                 <DataGridCheckBoxColumn Header="Наличие мачты"
-                                        Binding="{Binding NumberOfRowers}" />
+                                        Binding="{Binding NumberOfRowers, UpdateSourceTrigger=PropertyChanged}" />
                 <DataGridTextColumn Header="Базовая цена (руб.)"
-                                    Binding="{Binding BasePrice, StringFormat={}{0:F2}}">
+                                    Binding="{Binding BasePrice, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F2}}">
                 </DataGridTextColumn>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
