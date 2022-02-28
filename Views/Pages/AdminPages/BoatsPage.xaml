@@ -57,10 +57,19 @@
                                     Binding="{Binding Colour}" />
                 <DataGridCheckBoxColumn Header="Наличие мачты"
                                         Binding="{Binding NumberOfRowers}" />
-                <DataGridTextColumn Header="Базовая цена в рублях"
+                <DataGridTextColumn Header="Базовая цена (руб.)"
                                     Binding="{Binding BasePrice, StringFormat={}{0:F2}}">
                 </DataGridTextColumn>
-
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Удалить"
+                                    Width="auto"
+                                    Click="DeleteBoat"
+                                    ToolTip="Удалить запись лодки"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

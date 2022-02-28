@@ -12,26 +12,26 @@
         <StackPanel HorizontalAlignment="Center"
                     VerticalAlignment="Center">
             <StackPanel Orientation="Horizontal">
-                <Label Content="Логин"></Label>
-                <TextBox Name="Login"></TextBox>
+                <Label Content="Логин" />
+                <TextBox Name="Login" Text="admin"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Label Content="Пароль"></Label>
-                <PasswordBox Name="Password"></PasswordBox>
+                <Label Content="Пароль" />
+                <PasswordBox Name="Password" Password="admin"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Button Content="Авторизоваться"
                         IsDefault="True"
                         Click="PerformAuthenticationAsync"
-                        ToolTip="Авторизоваться в системе"></Button>
+                        ToolTip="Авторизоваться в системе" />
                 <Button Content="Выйти из приложения"
                         Click="PerformExitAsync"
-                        ToolTip="Выключить приложение"></Button>
+                        ToolTip="Выключить приложение" />
             </StackPanel>
             <Button Content="Ввод нового пользователя"
                     Width="auto"
                     Click="NavigateToRegistrationPage"
-                    ToolTip="Ввести нового пользователя на новой странице"></Button>
+                    ToolTip="Ввести нового пользователя на новой странице" />
         </StackPanel>
     </Grid>
 </Page>

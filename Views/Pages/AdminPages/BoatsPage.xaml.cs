@@ -1,9 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using WorldYachtsDesktopApp.Models.Entities;
+using WorldYachtsDesktopApp.Services;
 
 namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
 {
@@ -14,6 +18,9 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
     {
         public IEnumerable<BoatType> BoatTypes { get; set; }
         public IEnumerable<Wood> WoodTypes { get; set; }
+        private readonly IFeedbackService feedbackService =
+            new MessageBoxFeedbackService();
+
         public BoatsPage()
         {
             InitializeComponent();
@@ -23,7 +30,7 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
         /// <summary>
         /// Вызывается в момент открытия страницы.
         /// </summary>
-        private async void OnLoaded(object sender, System.Windows.RoutedEventArgs e)
+        private async void OnLoaded(object sender, RoutedEventArgs e)
         {
             WoodTypes = await Task.Run(() =>
             {
@@ -41,7 +48,12 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
                     return context.BoatType.ToList();
                 }
             });
-            BoatsGrid.ItemsSource = await Task.Run(() =>
+            BoatsGrid.ItemsSource = await GetBoats();
+        }
+
+        private async Task<List<Boat>> GetBoats()
+        {
+            return await Task.Run(() =>
             {
                 using (WorldYachtsBaseEntities context =
                 new WorldYachtsBaseEntities())
@@ -53,6 +65,42 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
                     .ToList();
                 }
             });
+        }
+
+        /// <summary>
+        /// Удалить выбранную лодку.
+        /// </summary>
+        private async void DeleteBoat(object sender, RoutedEventArgs e)
+        {
+            Boat boat = (sender as Button).DataContext as Boat;
+            if (!await feedbackService
+                .AskAsync($"Удалить лодку {boat.Model}?"))
+            {
+                return;
+            }
+            try
+            {
+                await Task.Run(() =>
+                {
+                    using (WorldYachtsBaseEntities context =
+                    new WorldYachtsBaseEntities())
+                    {
+                        context.Boat.First(b => b.BoatId == boat.BoatId)
+                        .IsDeleted = true;
+                        context.SaveChanges();
+                    }
+                });
+                BoatsGrid.ItemsSource = await GetBoats();
+                await feedbackService.InformAsync("Лодка удалена");
+            }
+            catch (Exception ex)
+            {
+                await feedbackService.InformErrorAsync("Не удалось "
+                                                       + "удалить лодку. "
+                                                       + "Перезагрузите "
+                                                       + "страницу");
+                Debug.Write(ex.StackTrace);
+            }
         }
     }
 }
