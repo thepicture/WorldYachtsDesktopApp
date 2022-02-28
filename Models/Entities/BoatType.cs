@@ -12,29 +12,18 @@ namespace WorldYachtsDesktopApp.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Boats
+    public partial class BoatType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Boats()
+        public BoatType()
         {
-            this.Fit = new HashSet<Fit>();
-            this.Order = new HashSet<Order>();
+            this.Boat = new HashSet<Boat>();
         }
     
-        public int BoatId { get; set; }
-        public string Model { get; set; }
-        public string BoatType { get; set; }
-        public int NumberOfRowers { get; set; }
-        public bool Mast { get; set; }
-        public string Colour { get; set; }
-        public string Wood { get; set; }
-        public decimal BasePrice { get; set; }
-        public string VAT { get; set; }
-        public bool IsDeleted { get; set; }
+        public int BoatTypeId { get; set; }
+        public string TypeTitle { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Fit> Fit { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Order { get; set; }
+        public virtual ICollection<Boat> Boat { get; set; }
     }
 }

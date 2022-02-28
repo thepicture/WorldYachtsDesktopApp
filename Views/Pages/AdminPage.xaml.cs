@@ -21,5 +21,14 @@ namespace WorldYachtsDesktopApp.Views.Pages
         {
             NavigationService.Navigate(new UsersPage());
         }
+
+        /// <summary>
+        /// Произвести навигацию 
+        /// на страницу управления производством продукции.
+        /// </summary>
+        private void PerformGoToBoatsPage(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new BoatsPage());
+        }
     }
 }

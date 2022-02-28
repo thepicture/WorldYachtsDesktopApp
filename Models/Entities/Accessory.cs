@@ -25,7 +25,7 @@ namespace WorldYachtsDesktopApp.Models.Entities
         public string AccName { get; set; }
         public string DescriptionOfAccessory { get; set; }
         public decimal Price { get; set; }
-        public string VAT { get; set; }
+        public decimal VAT { get; set; }
         public int Inventory { get; set; }
         public int OrderLevel { get; set; }
         public int OrderBatch { get; set; }

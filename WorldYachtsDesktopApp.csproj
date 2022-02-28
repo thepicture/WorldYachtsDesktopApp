@@ -74,6 +74,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Pages\AdminPages\BoatsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Pages\AdminPages\UsersPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -117,7 +121,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BaseModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\Boats.cs">
+    <Compile Include="Models\Entities\Boat.cs">
+      <DependentUpon>BaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\BoatType.cs">
       <DependentUpon>BaseModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Contract.cs">
@@ -150,6 +157,9 @@
     <Compile Include="Models\Entities\User.cs">
       <DependentUpon>BaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Wood.cs">
+      <DependentUpon>BaseModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\LoginModels\BlockedLoginResponse.cs" />
     <Compile Include="Models\LoginModels\IHaveBlocker.cs" />
     <Compile Include="Models\LoginModels\IncorrectLoginResponse.cs" />
@@ -167,6 +177,9 @@
     <Compile Include="Services\UserAuthenticatonService.cs" />
     <Compile Include="Views\Pages\AdminPage.xaml.cs">
       <DependentUpon>AdminPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\AdminPages\BoatsPage.xaml.cs">
+      <DependentUpon>BoatsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pages\AdminPages\UsersPage.xaml.cs">
       <DependentUpon>UsersPage.xaml</DependentUpon>

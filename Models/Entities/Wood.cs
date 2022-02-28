@@ -12,14 +12,18 @@ namespace WorldYachtsDesktopApp.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Fit
+    public partial class Wood
     {
-        public int FitId { get; set; }
-        public Nullable<int> AccessoryId { get; set; }
-        public Nullable<int> BoatId { get; set; }
-        public bool IsDeleted { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Wood()
+        {
+            this.Boat = new HashSet<Boat>();
+        }
     
-        public virtual Accessory Accessory { get; set; }
-        public virtual Boat Boat { get; set; }
+        public int WoodId { get; set; }
+        public string WoodTitle { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Boat> Boat { get; set; }
     }
 }

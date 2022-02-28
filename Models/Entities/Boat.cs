@@ -12,30 +12,31 @@ namespace WorldYachtsDesktopApp.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Order
+    public partial class Boat
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Order()
+        public Boat()
         {
-            this.Contract = new HashSet<Contract>();
-            this.Detail = new HashSet<Detail>();
+            this.Fit = new HashSet<Fit>();
+            this.Order = new HashSet<Order>();
         }
     
-        public int OrderId { get; set; }
-        public System.DateTime Date { get; set; }
-        public Nullable<int> SalesPersonId { get; set; }
-        public Nullable<int> CustomerId { get; set; }
-        public Nullable<int> BoatId { get; set; }
-        public string DeliveryAddress { get; set; }
-        public string City { get; set; }
+        public int BoatId { get; set; }
+        public string Model { get; set; }
+        public int BoatTypeId { get; set; }
+        public int NumberOfRowers { get; set; }
+        public bool Mast { get; set; }
+        public string Colour { get; set; }
+        public decimal BasePrice { get; set; }
+        public decimal VAT { get; set; }
         public bool IsDeleted { get; set; }
+        public int WoodId { get; set; }
     
+        public virtual BoatType BoatType { get; set; }
+        public virtual Wood Wood { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Contract> Contract { get; set; }
-        public virtual Customer Customer { get; set; }
+        public virtual ICollection<Fit> Fit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Detail> Detail { get; set; }
-        public virtual SalesPerson SalesPerson { get; set; }
-        public virtual Boat Boat { get; set; }
+        public virtual ICollection<Order> Order { get; set; }
     }
 }

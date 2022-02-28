@@ -22,6 +22,7 @@
                     Click="PerformGoToUsersPage"
                     ToolTip="Добавление, удаление и изменение пользовательских данных" />
             <Button Content="Управление производством продукции"
+                    Click="PerformGoToBoatsPage"
                     ToolTip="Добавление, удаление и изменение информации о продукции" />
         </StackPanel>
     </Grid>
