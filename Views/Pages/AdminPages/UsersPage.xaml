@@ -50,7 +50,8 @@
                         <DataTemplate>
                             <Button Content="Удалить"
                                     Width="auto"
-                                    Click="OnUserDelete" />
+                                    Click="OnUserDelete" 
+                                    ToolTip="Удалить запись из списка"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

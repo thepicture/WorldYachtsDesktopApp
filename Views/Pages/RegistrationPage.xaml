@@ -27,7 +27,8 @@
             </StackPanel>
             <Button Content="Ввести нового пользователя"
                     Click="PerformRegistrationAsync"
-                    Width="auto" />
+                    Width="auto" 
+                    ToolTip="Ввести нового пользователя и вернуться на страницу авторизации"/>
         </StackPanel>
     </Grid>
 </Page>

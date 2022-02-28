@@ -22,16 +22,18 @@
         <Grid Background="{StaticResource ThirdAdditionalColor}"
               Effect="{StaticResource CommonShadow}">
             <Image Source="{StaticResource CompanyLogo}"
-                   HorizontalAlignment="Left"></Image>
+                   HorizontalAlignment="Left" />
             <Label Content="{Binding ElementName=MainFrame, Path=Content.Title, FallbackValue=Окно навигации}"
-                   Style="{StaticResource HeaderLabel}"></Label>
+                   Style="{StaticResource HeaderLabel}" />
             <StackPanel HorizontalAlignment="Right"
                         VerticalAlignment="Center">
                 <Button Content="Назад"
                         Click="PerformGoBack"
-                        Name="GoBack" />
+                        Name="GoBack"
+                        ToolTip="Перейти на предыдущую страницу" />
                 <Button Content="Завершить сессию"
-                        Click="PerformGoToLoginPage">
+                        Click="PerformGoToLoginPage"
+                        ToolTip="Завершить сессию и перейти на окно авторизации">
                     <Button.Style>
                         <Style TargetType="Button"
                                BasedOn="{StaticResource {x:Type Button}}">
@@ -50,9 +52,9 @@
         <Frame Grid.Row="1"
                NavigationUIVisibility="Hidden"
                Name="MainFrame"
-               Navigated="OnNavigated"></Frame>
+               Navigated="OnNavigated" />
         <Grid Grid.Row="2"
               Background="{StaticResource FirstAdditionalColor}"
-              Effect="{StaticResource CommonShadow}"></Grid>
+              Effect="{StaticResource CommonShadow}" />
     </Grid>
 </Window>

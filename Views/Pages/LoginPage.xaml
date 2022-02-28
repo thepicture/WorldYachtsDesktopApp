@@ -22,13 +22,16 @@
             <StackPanel Orientation="Horizontal">
                 <Button Content="Авторизоваться"
                         IsDefault="True"
-                        Click="PerformAuthenticationAsync"></Button>
+                        Click="PerformAuthenticationAsync"
+                        ToolTip="Авторизоваться в системе"></Button>
                 <Button Content="Выйти из приложения"
-                        Click="PerformExitAsync"></Button>
+                        Click="PerformExitAsync"
+                        ToolTip="Выключить приложение"></Button>
             </StackPanel>
             <Button Content="Ввод нового пользователя"
                     Width="auto"
-                    Click="NavigateToRegistrationPage"></Button>
+                    Click="NavigateToRegistrationPage"
+                    ToolTip="Ввести нового пользователя на новой странице"></Button>
         </StackPanel>
     </Grid>
 </Page>

@@ -19,9 +19,10 @@
                 </Style>
             </StackPanel.Resources>
             <Button Content="Управление пользователями"
-                    Click="PerformGoToUsersPage"/>
-            <Button Content="Управление производством продукции" />
-            <Button Content="Управление ценами" />
+                    Click="PerformGoToUsersPage"
+                    ToolTip="Добавление, удаление и изменение пользовательских данных" />
+            <Button Content="Управление производством продукции"
+                    ToolTip="Добавление, удаление и изменение информации о продукции" />
         </StackPanel>
     </Grid>
 </Page>
