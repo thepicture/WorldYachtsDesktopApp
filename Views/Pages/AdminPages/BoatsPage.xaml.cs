@@ -85,7 +85,7 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
                     using (WorldYachtsBaseEntities context =
                     new WorldYachtsBaseEntities())
                     {
-                        context.Boat.First(b => b.BoatId == boat.BoatId)
+                        context.Boat.Find(boat.BoatId)
                         .IsDeleted = true;
                         context.SaveChanges();
                     }
@@ -97,6 +97,48 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
             {
                 await feedbackService.InformErrorAsync("Не удалось "
                                                        + "удалить лодку. "
+                                                       + "Перезагрузите "
+                                                       + "страницу");
+                Debug.Write(ex.StackTrace);
+            }
+        }
+
+        /// <summary>
+        /// Вызывается в момент завершения изменений данных 
+        /// о лодке.
+        /// </summary>
+        private async void OnRowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            if (!await feedbackService.AskAsync("Вы завершили " +
+                "изменение лодки. Применить изменения?"))
+            {
+                BoatsGrid.ItemsSource = await GetBoats();
+                return;
+            }
+            Boat boat = e.Row.DataContext as Boat;
+            try
+            {
+                await Task.Run(() =>
+                {
+                    using (WorldYachtsBaseEntities context =
+                    new WorldYachtsBaseEntities())
+                    {
+                        context.Entry(
+                            context.Boat.Find(boat.BoatId)
+                            )
+                        .CurrentValues
+                        .SetValues(boat);
+                        context.SaveChanges();
+                    }
+                });
+                BoatsGrid.ItemsSource = await GetBoats();
+                await feedbackService.InformAsync("Лодка изменена");
+            }
+            catch (Exception ex)
+            {
+                await feedbackService.InformErrorAsync("Не удалось "
+                                                       + "изменить данные "
+                                                       + "о лодке. "
                                                        + "Перезагрузите "
                                                        + "страницу");
                 Debug.Write(ex.StackTrace);

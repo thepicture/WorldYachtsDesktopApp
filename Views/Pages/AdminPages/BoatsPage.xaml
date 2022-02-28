@@ -11,12 +11,14 @@
       Loaded="OnLoaded">
     <Grid>
         <DataGrid x:Name="BoatsGrid"
-                  ColumnWidth="*">
+                  ColumnWidth="*"
+                  RowEditEnding="OnRowEditEnding">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Наименование товара"
                                     Binding="{Binding Model}" />
                 <DataGridTextColumn Header="Номер для заказа"
-                                    Binding="{Binding BoatId}" />
+                                    Binding="{Binding BoatId}" 
+                                    IsReadOnly="True"/>
                 <DataGridComboBoxColumn Header="Тип лодки"
                                         DisplayMemberPath="TypeTitle"
                                         SelectedValuePath="BoatTypeId"
@@ -63,10 +65,26 @@
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Удалить"
-                                    Width="auto"
+                            <Button Width="auto"
                                     Click="DeleteBoat"
-                                    ToolTip="Удалить запись лодки"/>
+                                    ToolTip="Удалить запись лодки">
+                                <Button.Style>
+                                    <Style TargetType="Button"
+                                           BasedOn="{StaticResource {x:Type Button}}">
+                                        <Setter Property="Content"
+                                                Value="Удалить" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding BoatId}"
+                                                         Value="{x:Null}">
+                                                <Setter Property="IsEnabled"
+                                                        Value="False" />
+                                                <Setter Property="Content"
+                                                        Value="Новая запись" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
