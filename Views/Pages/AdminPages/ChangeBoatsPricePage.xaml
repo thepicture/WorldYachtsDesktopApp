@@ -1,0 +1,34 @@
+﻿<Page x:Class="WorldYachtsDesktopApp.Views.Pages.AdminPages.ChangeBoatsPricePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:WorldYachtsDesktopApp.Views.Pages.AdminPages"
+      mc:Ignorable="d"
+      d:DesignHeight="450"
+      d:DesignWidth="800"
+      Title="Изменить цену лодок">
+    <Grid>
+        <StackPanel HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Я хочу"
+                       Width="auto"></Label>
+                <ComboBox SelectedIndex="0">
+                    <ComboBox.Items>
+                        <ComboBoxItem>увеличить</ComboBoxItem>
+                        <ComboBoxItem>уменьшить</ComboBoxItem>
+                    </ComboBox.Items>
+                </ComboBox>
+                <Label Content="цену на"
+                       Width="auto"></Label>
+                <TextBox Width="50"
+                         Text="1"></TextBox>
+                <Label Content="%"
+                       Width="auto"></Label>
+            </StackPanel>
+            <Button Content="Применить изменения"
+                    Width="auto"></Button>
+        </StackPanel>
+    </Grid>
+</Page>

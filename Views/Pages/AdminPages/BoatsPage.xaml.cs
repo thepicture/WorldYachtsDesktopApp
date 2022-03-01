@@ -210,5 +210,14 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
                 Debug.Write(ex.StackTrace);
             }
         }
+
+        /// <summary>
+        /// Перейти на страницу изменения цены лодки.
+        /// </summary>
+        private void GoToChangeBoatsPrice(object sender, RoutedEventArgs e)
+        {
+            IEnumerable<Boat> boats = BoatsGrid.SelectedItems.Cast<Boat>();
+            NavigationService.Navigate(new ChangeBoatsPricePage(boats));
+        }
     }
 }

@@ -78,6 +78,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Pages\AdminPages\ChangeBoatsPricePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Pages\AdminPages\UsersPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -180,6 +184,9 @@
     </Compile>
     <Compile Include="Views\Pages\AdminPages\BoatsPage.xaml.cs">
       <DependentUpon>BoatsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\AdminPages\ChangeBoatsPricePage.xaml.cs">
+      <DependentUpon>ChangeBoatsPricePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pages\AdminPages\UsersPage.xaml.cs">
       <DependentUpon>UsersPage.xaml</DependentUpon>

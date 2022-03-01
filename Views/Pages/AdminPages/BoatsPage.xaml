@@ -10,15 +10,40 @@
       Title="Просмотр списка лодок"
       Loaded="OnLoaded">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Button Content="Изменить цену у выделенных записей"
+                HorizontalAlignment="Center"
+                Width="auto"
+                Click="GoToChangeBoatsPrice">
+            <Button.Style>
+                <Style TargetType="Button"
+                       BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="Visibility"
+                                Value="Visible" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=BoatsGrid, Path=SelectedItems.Count}"
+                                     Value="0">
+                            <Setter Property="Visibility"
+                                    Value="Hidden" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
         <DataGrid x:Name="BoatsGrid"
                   ColumnWidth="*"
-                  RowEditEnding="OnRowEditEnding">
+                  RowEditEnding="OnRowEditEnding"
+                  SelectionMode="Extended"
+                  Grid.Row="1">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Наименование товара"
                                     Binding="{Binding Model, UpdateSourceTrigger=PropertyChanged}" />
                 <DataGridTextColumn Header="Номер для заказа"
-                                    Binding="{Binding BoatId}" 
-                                    IsReadOnly="True"/>
+                                    Binding="{Binding BoatId}"
+                                    IsReadOnly="True" />
                 <DataGridComboBoxColumn Header="Тип лодки"
                                         DisplayMemberPath="TypeTitle"
                                         SelectedValuePath="BoatTypeId"
