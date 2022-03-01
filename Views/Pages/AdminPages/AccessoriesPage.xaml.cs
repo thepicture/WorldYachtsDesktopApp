@@ -92,9 +92,62 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
         /// Вызывается в момент 
         /// редактирования записи аксессуара.
         /// </summary>
-        private void OnRowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        private async void OnRowEditEnding(object sender,
+                                     DataGridRowEditEndingEventArgs e)
         {
+            Accessory accessory = e.Row.DataContext as Accessory;
 
+            string reason = accessory.AccessoryId == 0
+                ? "добавление"
+                : "изменение";
+            if (!await feedbackService.AskAsync("Вы завершили " +
+                $"{reason} аксессуара. Применить изменения?"))
+            {
+                AccessoriesGrid.ItemsSource = await GetAccessories();
+                return;
+            }
+            try
+            {
+                if (accessory.AccessoryId == 0)
+                {
+                    await Task.Run(() =>
+                    {
+                        using (WorldYachtsBaseEntities context =
+                        new WorldYachtsBaseEntities())
+                        {
+                            context.Accessory.Add(accessory);
+                            context.SaveChanges();
+                        }
+                    });
+                }
+                else
+                {
+                    await Task.Run(() =>
+                    {
+                        using (WorldYachtsBaseEntities context =
+                        new WorldYachtsBaseEntities())
+                        {
+                            context.Entry(
+                                context.Accessory.Find(accessory.AccessoryId)
+                                )
+                            .CurrentValues
+                            .SetValues(accessory);
+                            context.SaveChanges();
+                        }
+                    });
+                }
+                AccessoriesGrid.ItemsSource = await GetAccessories();
+                await feedbackService.InformAsync("Аксессуар изменен");
+            }
+            catch (Exception ex)
+            {
+                await feedbackService.InformErrorAsync("Не удалось "
+                                                       + "изменить данные "
+                                                       + "об аксессуаре. "
+                                                       + "Перезагрузите "
+                                                       + "страницу");
+                Debug.Write(ex.StackTrace);
+            }
         }
 
         /// <summary>
