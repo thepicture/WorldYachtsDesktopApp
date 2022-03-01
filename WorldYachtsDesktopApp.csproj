@@ -74,6 +74,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Pages\AdminPages\AccessoriesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Pages\AdminPages\BoatsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -181,6 +185,9 @@
     <Compile Include="Services\UserAuthenticatonService.cs" />
     <Compile Include="Views\Pages\AdminPage.xaml.cs">
       <DependentUpon>AdminPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\AdminPages\AccessoriesPage.xaml.cs">
+      <DependentUpon>AccessoriesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pages\AdminPages\BoatsPage.xaml.cs">
       <DependentUpon>BoatsPage.xaml</DependentUpon>

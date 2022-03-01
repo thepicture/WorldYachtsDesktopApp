@@ -21,9 +21,12 @@
             <Button Content="Управление пользователями"
                     Click="PerformGoToUsersPage"
                     ToolTip="Добавление, удаление и изменение пользовательских данных" />
-            <Button Content="Управление производством продукции"
+            <Button Content="Управление производством лодок"
                     Click="PerformGoToBoatsPage"
-                    ToolTip="Добавление, удаление и изменение информации о продукции" />
+                    ToolTip="Добавление, удаление и изменение информации о лодках" />
+            <Button Content="Управление производством аксессуаров"
+                    Click="PerformGoToAccessoriesPage"
+                    ToolTip="Добавление, удаление и изменение информации о аксессуарах" />
         </StackPanel>
     </Grid>
 </Page>
