@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -52,9 +54,38 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
         /// <summary>
         /// Удалить выбранный аксессуар.
         /// </summary>
-        private void DeleteAccessory(object sender, RoutedEventArgs e)
+        private async void DeleteAccessory(object sender, RoutedEventArgs e)
         {
-
+            Accessory accessory = (sender as Button)
+                .DataContext as Accessory;
+            if (!await feedbackService
+                .AskAsync($"Удалить лодку {accessory.AccName}?"))
+            {
+                return;
+            }
+            try
+            {
+                await Task.Run(() =>
+                {
+                    using (WorldYachtsBaseEntities context =
+                    new WorldYachtsBaseEntities())
+                    {
+                        context.Accessory.Find(accessory.AccessoryId)
+                        .IsDeleted = true;
+                        context.SaveChanges();
+                    }
+                });
+                AccessoriesGrid.ItemsSource = await GetAccessories();
+                await feedbackService.InformAsync("Аксессуар удален");
+            }
+            catch (Exception ex)
+            {
+                await feedbackService.InformErrorAsync("Не удалось "
+                                                       + "удалить аксессуар. "
+                                                       + "Перезагрузите "
+                                                       + "страницу");
+                Debug.Write(ex.StackTrace);
+            }
         }
 
         /// <summary>
