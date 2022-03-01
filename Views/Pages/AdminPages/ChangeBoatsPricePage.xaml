@@ -14,7 +14,8 @@
             <StackPanel Orientation="Horizontal">
                 <Label Content="Я хочу"
                        Width="auto"></Label>
-                <ComboBox SelectedIndex="0">
+                <ComboBox Name="PriceActions"
+                          SelectedIndex="0">
                     <ComboBox.Items>
                         <ComboBoxItem>увеличить</ComboBoxItem>
                         <ComboBoxItem>уменьшить</ComboBoxItem>
@@ -22,13 +23,15 @@
                 </ComboBox>
                 <Label Content="цену на"
                        Width="auto"></Label>
-                <TextBox Width="50"
+                <TextBox x:Name="HowMuchBox"
+                         Width="50"
                          Text="1"></TextBox>
                 <Label Content="%"
                        Width="auto"></Label>
             </StackPanel>
             <Button Content="Применить изменения"
-                    Width="auto"></Button>
+                    Width="auto"
+                    Click="PerformPriceChange"></Button>
         </StackPanel>
     </Grid>
 </Page>
