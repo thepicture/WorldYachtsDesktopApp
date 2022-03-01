@@ -29,6 +29,15 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
         /// </summary>
         private async void PerformPriceChange(object sender, RoutedEventArgs e)
         {
+            if (!int.TryParse(HowMuchBox.Text,
+                              out _) || int.Parse(HowMuchBox.Text) < 0)
+            {
+                await feedbackService.WarnAsync("Процент - "
+                                                + "это обязательное "
+                                                + "положительное "
+                                                + "целое число");
+                return;
+            }
             string action = (PriceActions.SelectedItem as ComboBoxItem)
                 .Content
                 .ToString();
