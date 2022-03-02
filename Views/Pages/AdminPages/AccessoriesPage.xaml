@@ -14,25 +14,29 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Button Content="Изменить цену у выделенных записей"
-                HorizontalAlignment="Center"
-                Width="auto"
-                Click="GoToChangeAccessoriesPrice">
-            <Button.Style>
-                <Style TargetType="Button"
-                       BasedOn="{StaticResource {x:Type Button}}">
-                    <Setter Property="Visibility"
-                            Value="Visible" />
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding ElementName=AccessoriesGrid, Path=SelectedItems.Count}"
-                                     Value="0">
-                            <Setter Property="Visibility"
-                                    Value="Hidden" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-        </Button>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Распечатать список"
+                    Click="PrintList" />
+            <Button Content="Изменить цену у выделенных записей"
+                    HorizontalAlignment="Center"
+                    Width="auto"
+                    Click="GoToChangeAccessoriesPrice">
+                <Button.Style>
+                    <Style TargetType="Button"
+                           BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="Visibility"
+                                Value="Visible" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=AccessoriesGrid, Path=SelectedItems.Count}"
+                                         Value="0">
+                                <Setter Property="Visibility"
+                                        Value="Hidden" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </StackPanel>
         <DataGrid x:Name="AccessoriesGrid"
                   ColumnWidth="*"
                   RowEditEnding="OnRowEditEnding"

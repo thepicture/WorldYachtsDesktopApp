@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using WorldYachtsDesktopApp.Models.Entities;
 using WorldYachtsDesktopApp.Services;
 
@@ -18,6 +19,9 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
     {
         private readonly IFeedbackService feedbackService =
             new MessageBoxFeedbackService();
+        private readonly IPrintService<Visual> printService =
+            new PrintToPdfService();
+
         public AccessoriesPage()
         {
             InitializeComponent();
@@ -156,6 +160,24 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
         private void GoToChangeAccessoriesPrice(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private async void PrintList(object sender, RoutedEventArgs e)
+        {
+            if (printService
+               .Print(AccessoriesGrid, "распечатать "
+                   + "список аксессуаров в .pdf"))
+            {
+                await feedbackService
+                    .InformAsync("Список аксессуаров "
+                              + $"успешно распечатан");
+            }
+            else
+            {
+                await feedbackService.InformAsync("Печать была отменена "
+                                                  + "или принтер "
+                                                  + "не подключен");
+            }
         }
     }
 }
