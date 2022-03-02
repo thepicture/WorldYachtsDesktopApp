@@ -136,10 +136,10 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
                               )
                 || int.Parse(
                     boat.NumberOfRowers.ToString()
-                    ) < 1)
+                    ) < 0)
             {
                 errors.AppendLine("Количество мест - это обязательное " +
-                    "целое положительное число");
+                    "неотрицательное положительное число");
             }
             if (boat.ColorId == 0)
             {
