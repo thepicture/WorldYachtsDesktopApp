@@ -19,6 +19,7 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
     {
         public IEnumerable<BoatType> BoatTypes { get; set; }
         public IEnumerable<Wood> WoodTypes { get; set; }
+        public IEnumerable<BoatColor> Colors { get; set; }
         private readonly IFeedbackService feedbackService =
             new MessageBoxFeedbackService();
 
@@ -49,6 +50,14 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
                     return context.BoatType.ToList();
                 }
             });
+            Colors = await Task.Run(() =>
+            {
+                using (WorldYachtsBaseEntities context =
+                new WorldYachtsBaseEntities())
+                {
+                    return context.BoatColor.ToList();
+                }
+            });
             BoatsGrid.ItemsSource = await GetBoats();
         }
 
@@ -61,6 +70,7 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
                 {
                     return context.Boat
                     .Include(b => b.Wood)
+                    .Include(b => b.BoatColor)
                     .Include(b => b.BoatType)
                     .Where(b => !b.IsDeleted)
                     .ToList();

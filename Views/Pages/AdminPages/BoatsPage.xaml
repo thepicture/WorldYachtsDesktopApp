@@ -80,8 +80,23 @@
                         </Style>
                     </DataGridComboBoxColumn.ElementStyle>
                 </DataGridComboBoxColumn>
-                <DataGridTextColumn Header="Цвет"
-                                    Binding="{Binding Colour, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridComboBoxColumn Header="Цвет"
+                                        DisplayMemberPath="ColorTitle"
+                                        SelectedValuePath="ColorId"
+                                        SelectedValueBinding="{Binding ColorId, UpdateSourceTrigger=PropertyChanged}">
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}, Path=DataContext.Colors}" />
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}, Path=DataContext.Colors}" />
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                </DataGridComboBoxColumn>
                 <DataGridCheckBoxColumn Header="Наличие мачты"
                                         Binding="{Binding NumberOfRowers, UpdateSourceTrigger=PropertyChanged}" />
                 <DataGridTextColumn Header="Базовая цена (руб.)"
