@@ -12,26 +12,18 @@ namespace WorldYachtsDesktopApp.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Contract
+    public partial class BoatClass
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Contract()
+        public BoatClass()
         {
-            this.Invoice = new HashSet<Invoice>();
+            this.Boat = new HashSet<Boat>();
         }
     
-        public int ContractId { get; set; }
-        public System.DateTime Date { get; set; }
-        public decimal DepositPayed { get; set; }
-        public Nullable<int> OrderId { get; set; }
-        public decimal ContractTotalPrice { get; set; }
-        public decimal ContracTotalPriceInclVAT { get; set; }
-        public bool IsDeleted { get; set; }
-        public Nullable<int> ProcessId { get; set; }
+        public int ClassId { get; set; }
+        public string ClassTitle { get; set; }
     
-        public virtual Order Order { get; set; }
-        public virtual ProductionProcess ProductionProcess { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Invoice> Invoice { get; set; }
+        public virtual ICollection<Boat> Boat { get; set; }
     }
 }

@@ -100,7 +100,7 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
                                                        + "удалить лодку. "
                                                        + "Перезагрузите "
                                                        + "страницу");
-                Debug.Write(ex.StackTrace);
+                Debug.WriteLine(ex.StackTrace);
             }
         }
 
@@ -128,10 +128,9 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
                 errors.AppendLine("Количество мест - это обязательное " +
                     "целое положительное число");
             }
-            if (string.IsNullOrWhiteSpace(boat.Colour) || boat.Colour.Length > 30)
+            if (boat.ColorId == 0)
             {
-                errors.AppendLine("Цвет лодки - это обязательное " +
-                    "поле до 30 символов");
+                errors.AppendLine("Укажите цвет лодки");
             }
             if (!decimal.TryParse(
               boat.BasePrice.ToString(), out _
@@ -207,7 +206,7 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
                                                        + "о лодке. "
                                                        + "Перезагрузите "
                                                        + "страницу");
-                Debug.Write(ex.StackTrace);
+                Debug.WriteLine(ex.StackTrace);
             }
         }
 

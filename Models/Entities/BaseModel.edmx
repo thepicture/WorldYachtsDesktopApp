@@ -29,11 +29,26 @@
           <Property Name="BoatTypeId" Type="int" Nullable="false" />
           <Property Name="NumberOfRowers" Type="int" Nullable="false" />
           <Property Name="Mast" Type="bit" Nullable="false" />
-          <Property Name="Colour" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="BasePrice" Type="money" Nullable="false" />
           <Property Name="VAT" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="WoodId" Type="int" Nullable="false" />
+          <Property Name="ColorId" Type="int" Nullable="false" />
+          <Property Name="ClassId" Type="int" />
+        </EntityType>
+        <EntityType Name="BoatClass">
+          <Key>
+            <PropertyRef Name="ClassId" />
+          </Key>
+          <Property Name="ClassId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClassTitle" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BoatColor">
+          <Key>
+            <PropertyRef Name="ColorId" />
+          </Key>
+          <Property Name="ColorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ColorTitle" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="BoatType">
           <Key>
@@ -52,8 +67,8 @@
           <Property Name="OrderId" Type="int" />
           <Property Name="ContractTotalPrice" Type="money" Nullable="false" />
           <Property Name="ContracTotalPriceInclVAT" Type="money" Nullable="false" />
-          <Property Name="ProductionProcess" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="ProcessId" Type="int" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -125,6 +140,13 @@
           <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="ProductionProcess">
+          <Key>
+            <PropertyRef Name="ProcessId" />
+          </Key>
+          <Property Name="ProcessId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProcessTitle" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="RoleId" />
@@ -174,6 +196,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Boat_BoatClass">
+          <End Role="BoatClass" Type="Self.BoatClass" Multiplicity="0..1" />
+          <End Role="Boat" Type="Self.Boat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BoatClass">
+              <PropertyRef Name="ClassId" />
+            </Principal>
+            <Dependent Role="Boat">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Boat_BoatColor">
+          <End Role="BoatColor" Type="Self.BoatColor" Multiplicity="1" />
+          <End Role="Boat" Type="Self.Boat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BoatColor">
+              <PropertyRef Name="ColorId" />
+            </Principal>
+            <Dependent Role="Boat">
+              <PropertyRef Name="ColorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Boats_BoatType">
           <End Role="BoatType" Type="Self.BoatType" Multiplicity="1" />
           <End Role="Boat" Type="Self.Boat" Multiplicity="*" />
@@ -207,6 +253,18 @@
             </Principal>
             <Dependent Role="Contract">
               <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_ProductionProcess">
+          <End Role="ProductionProcess" Type="Self.ProductionProcess" Multiplicity="0..1" />
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductionProcess">
+              <PropertyRef Name="ProcessId" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="ProcessId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -321,6 +379,8 @@
         <EntityContainer Name="ContextStoreContainer">
           <EntitySet Name="Accessory" EntityType="Self.Accessory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Boat" EntityType="Self.Boat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BoatClass" EntityType="Self.BoatClass" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BoatColor" EntityType="Self.BoatColor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BoatType" EntityType="Self.BoatType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Contract" EntityType="Self.Contract" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
@@ -329,6 +389,7 @@
           <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Partner" EntityType="Self.Partner" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductionProcess" EntityType="Self.ProductionProcess" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SalesPerson" EntityType="Self.SalesPerson" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
@@ -336,6 +397,14 @@
           <AssociationSet Name="FK_Accessory_Partner" Association="Self.FK_Accessory_Partner">
             <End Role="Partner" EntitySet="Partner" />
             <End Role="Accessory" EntitySet="Accessory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Boat_BoatClass" Association="Self.FK_Boat_BoatClass">
+            <End Role="BoatClass" EntitySet="BoatClass" />
+            <End Role="Boat" EntitySet="Boat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Boat_BoatColor" Association="Self.FK_Boat_BoatColor">
+            <End Role="BoatColor" EntitySet="BoatColor" />
+            <End Role="Boat" EntitySet="Boat" />
           </AssociationSet>
           <AssociationSet Name="FK_Boats_BoatType" Association="Self.FK_Boats_BoatType">
             <End Role="BoatType" EntitySet="BoatType" />
@@ -347,6 +416,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_Contract_Order" Association="Self.FK_Contract_Order">
             <End Role="Order" EntitySet="Order" />
+            <End Role="Contract" EntitySet="Contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_ProductionProcess" Association="Self.FK_Contract_ProductionProcess">
+            <End Role="ProductionProcess" EntitySet="ProductionProcess" />
             <End Role="Contract" EntitySet="Contract" />
           </AssociationSet>
           <AssociationSet Name="FK_Detail_Accessory" Association="Self.FK_Detail_Accessory">
@@ -392,6 +465,9 @@
       <Schema Namespace="Context" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="WorldYachtsBaseEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Accessory" EntityType="Context.Accessory" />
+          <EntitySet Name="Boat" EntityType="Context.Boat" />
+          <EntitySet Name="BoatClass" EntityType="Context.BoatClass" />
+          <EntitySet Name="BoatColor" EntityType="Context.BoatColor" />
           <EntitySet Name="BoatType" EntityType="Context.BoatType" />
           <EntitySet Name="Contract" EntityType="Context.Contract" />
           <EntitySet Name="Customer" EntityType="Context.Customer" />
@@ -400,6 +476,7 @@
           <EntitySet Name="Invoice" EntityType="Context.Invoice" />
           <EntitySet Name="Order" EntityType="Context.Order" />
           <EntitySet Name="Partner" EntityType="Context.Partner" />
+          <EntitySet Name="ProductionProcess" EntityType="Context.ProductionProcess" />
           <EntitySet Name="Role" EntityType="Context.Role" />
           <EntitySet Name="SalesPerson" EntityType="Context.SalesPerson" />
           <EntitySet Name="User" EntityType="Context.User" />
@@ -416,8 +493,36 @@
             <End Role="Accessory" EntitySet="Accessory" />
             <End Role="Fit" EntitySet="Fit" />
           </AssociationSet>
+          <AssociationSet Name="FK_Boat_BoatClass" Association="Context.FK_Boat_BoatClass">
+            <End Role="BoatClass" EntitySet="BoatClass" />
+            <End Role="Boat" EntitySet="Boat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Boat_BoatColor" Association="Context.FK_Boat_BoatColor">
+            <End Role="BoatColor" EntitySet="BoatColor" />
+            <End Role="Boat" EntitySet="Boat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Boats_BoatType" Association="Context.FK_Boats_BoatType">
+            <End Role="BoatType" EntitySet="BoatType" />
+            <End Role="Boat" EntitySet="Boat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Boats_Wood" Association="Context.FK_Boats_Wood">
+            <End Role="Wood" EntitySet="Wood" />
+            <End Role="Boat" EntitySet="Boat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Fit_Boats" Association="Context.FK_Fit_Boats">
+            <End Role="Boat" EntitySet="Boat" />
+            <End Role="Fit" EntitySet="Fit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Boats" Association="Context.FK_Order_Boats">
+            <End Role="Boat" EntitySet="Boat" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
           <AssociationSet Name="FK_Contract_Order" Association="Context.FK_Contract_Order">
             <End Role="Order" EntitySet="Order" />
+            <End Role="Contract" EntitySet="Contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_ProductionProcess" Association="Context.FK_Contract_ProductionProcess">
+            <End Role="ProductionProcess" EntitySet="ProductionProcess" />
             <End Role="Contract" EntitySet="Contract" />
           </AssociationSet>
           <AssociationSet Name="FK_Invoice_Contract" Association="Context.FK_Invoice_Contract">
@@ -440,23 +545,6 @@
             <End Role="Role" EntitySet="Role" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
-          <EntitySet Name="Boat" EntityType="Context.Boat" />
-          <AssociationSet Name="FK_Boats_BoatType" Association="Context.FK_Boats_BoatType">
-            <End Role="BoatType" EntitySet="BoatType" />
-            <End Role="Boat" EntitySet="Boat" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Boats_Wood" Association="Context.FK_Boats_Wood">
-            <End Role="Wood" EntitySet="Wood" />
-            <End Role="Boat" EntitySet="Boat" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Fit_Boats" Association="Context.FK_Fit_Boats">
-            <End Role="Boat" EntitySet="Boat" />
-            <End Role="Fit" EntitySet="Fit" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Order_Boats" Association="Context.FK_Order_Boats">
-            <End Role="Boat" EntitySet="Boat" />
-            <End Role="Order" EntitySet="Order" />
-          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Accessory">
           <Key>
@@ -476,6 +564,44 @@
           <NavigationProperty Name="Detail" Relationship="Context.FK_Detail_Accessory" FromRole="Accessory" ToRole="Detail" />
           <NavigationProperty Name="Fit" Relationship="Context.FK_Fit_Accessory" FromRole="Accessory" ToRole="Fit" />
         </EntityType>
+        <EntityType Name="Boat">
+          <Key>
+            <PropertyRef Name="BoatId" />
+          </Key>
+          <Property Name="BoatId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Model" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BoatTypeId" Type="Int32" Nullable="false" />
+          <Property Name="NumberOfRowers" Type="Int32" Nullable="false" />
+          <Property Name="Mast" Type="Boolean" Nullable="false" />
+          <Property Name="BasePrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="VAT" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="WoodId" Type="Int32" Nullable="false" />
+          <Property Name="ColorId" Type="Int32" Nullable="false" />
+          <Property Name="ClassId" Type="Int32" />
+          <NavigationProperty Name="BoatClass" Relationship="Context.FK_Boat_BoatClass" FromRole="Boat" ToRole="BoatClass" />
+          <NavigationProperty Name="BoatColor" Relationship="Context.FK_Boat_BoatColor" FromRole="Boat" ToRole="BoatColor" />
+          <NavigationProperty Name="BoatType" Relationship="Context.FK_Boats_BoatType" FromRole="Boat" ToRole="BoatType" />
+          <NavigationProperty Name="Wood" Relationship="Context.FK_Boats_Wood" FromRole="Boat" ToRole="Wood" />
+          <NavigationProperty Name="Fit" Relationship="Context.FK_Fit_Boats" FromRole="Boat" ToRole="Fit" />
+          <NavigationProperty Name="Order" Relationship="Context.FK_Order_Boats" FromRole="Boat" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="BoatClass">
+          <Key>
+            <PropertyRef Name="ClassId" />
+          </Key>
+          <Property Name="ClassId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClassTitle" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Boat" Relationship="Context.FK_Boat_BoatClass" FromRole="BoatClass" ToRole="Boat" />
+        </EntityType>
+        <EntityType Name="BoatColor">
+          <Key>
+            <PropertyRef Name="ColorId" />
+          </Key>
+          <Property Name="ColorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ColorTitle" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Boat" Relationship="Context.FK_Boat_BoatColor" FromRole="BoatColor" ToRole="Boat" />
+        </EntityType>
         <EntityType Name="BoatType">
           <Key>
             <PropertyRef Name="BoatTypeId" />
@@ -494,9 +620,10 @@
           <Property Name="OrderId" Type="Int32" />
           <Property Name="ContractTotalPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="ContracTotalPriceInclVAT" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="ProductionProcess" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="ProcessId" Type="Int32" />
           <NavigationProperty Name="Order" Relationship="Context.FK_Contract_Order" FromRole="Contract" ToRole="Order" />
+          <NavigationProperty Name="ProductionProcess" Relationship="Context.FK_Contract_ProductionProcess" FromRole="Contract" ToRole="ProductionProcess" />
           <NavigationProperty Name="Invoice" Relationship="Context.FK_Invoice_Contract" FromRole="Contract" ToRole="Invoice" />
         </EntityType>
         <EntityType Name="Customer">
@@ -564,11 +691,11 @@
           <Property Name="DeliveryAddress" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="City" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Boat" Relationship="Context.FK_Order_Boats" FromRole="Order" ToRole="Boat" />
           <NavigationProperty Name="Contract" Relationship="Context.FK_Contract_Order" FromRole="Order" ToRole="Contract" />
           <NavigationProperty Name="Customer" Relationship="Context.FK_Order_Customer" FromRole="Order" ToRole="Customer" />
           <NavigationProperty Name="Detail" Relationship="Context.FK_Detail_Order" FromRole="Order" ToRole="Detail" />
           <NavigationProperty Name="SalesPerson" Relationship="Context.FK_Order_Salesperson" FromRole="Order" ToRole="SalesPerson" />
-          <NavigationProperty Name="Boat" Relationship="Context.FK_Order_Boats" FromRole="Order" ToRole="Boat" />
         </EntityType>
         <EntityType Name="Partner">
           <Key>
@@ -580,6 +707,14 @@
           <Property Name="City" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Accessory" Relationship="Context.FK_Accessory_Partner" FromRole="Partner" ToRole="Accessory" />
+        </EntityType>
+        <EntityType Name="ProductionProcess">
+          <Key>
+            <PropertyRef Name="ProcessId" />
+          </Key>
+          <Property Name="ProcessId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProcessTitle" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Contract" Relationship="Context.FK_Contract_ProductionProcess" FromRole="ProductionProcess" ToRole="Contract" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -658,6 +793,78 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Boat_BoatClass">
+          <End Type="Context.BoatClass" Role="BoatClass" Multiplicity="0..1" />
+          <End Type="Context.Boat" Role="Boat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BoatClass">
+              <PropertyRef Name="ClassId" />
+            </Principal>
+            <Dependent Role="Boat">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Boat_BoatColor">
+          <End Type="Context.BoatColor" Role="BoatColor" Multiplicity="1" />
+          <End Type="Context.Boat" Role="Boat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BoatColor">
+              <PropertyRef Name="ColorId" />
+            </Principal>
+            <Dependent Role="Boat">
+              <PropertyRef Name="ColorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Boats_BoatType">
+          <End Type="Context.BoatType" Role="BoatType" Multiplicity="1" />
+          <End Type="Context.Boat" Role="Boat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BoatType">
+              <PropertyRef Name="BoatTypeId" />
+            </Principal>
+            <Dependent Role="Boat">
+              <PropertyRef Name="BoatTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Boats_Wood">
+          <End Type="Context.Wood" Role="Wood" Multiplicity="1" />
+          <End Type="Context.Boat" Role="Boat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Wood">
+              <PropertyRef Name="WoodId" />
+            </Principal>
+            <Dependent Role="Boat">
+              <PropertyRef Name="WoodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Fit_Boats">
+          <End Type="Context.Boat" Role="Boat" Multiplicity="0..1" />
+          <End Type="Context.Fit" Role="Fit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Boat">
+              <PropertyRef Name="BoatId" />
+            </Principal>
+            <Dependent Role="Fit">
+              <PropertyRef Name="BoatId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Boats">
+          <End Type="Context.Boat" Role="Boat" Multiplicity="0..1" />
+          <End Type="Context.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Boat">
+              <PropertyRef Name="BoatId" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="BoatId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Contract_Order">
           <End Type="Context.Order" Role="Order" Multiplicity="0..1" />
           <End Type="Context.Contract" Role="Contract" Multiplicity="*" />
@@ -667,6 +874,18 @@
             </Principal>
             <Dependent Role="Contract">
               <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_ProductionProcess">
+          <End Type="Context.ProductionProcess" Role="ProductionProcess" Multiplicity="0..1" />
+          <End Type="Context.Contract" Role="Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductionProcess">
+              <PropertyRef Name="ProcessId" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="ProcessId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -730,73 +949,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Boat">
-          <Key>
-            <PropertyRef Name="BoatId" />
-          </Key>
-          <Property Name="BoatId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Model" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BoatTypeId" Type="Int32" Nullable="false" />
-          <Property Name="NumberOfRowers" Type="Int32" Nullable="false" />
-          <Property Name="Mast" Type="Boolean" Nullable="false" />
-          <Property Name="Colour" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="BasePrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="VAT" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
-          <Property Name="WoodId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="BoatType" Relationship="Context.FK_Boats_BoatType" FromRole="Boat" ToRole="BoatType" />
-          <NavigationProperty Name="Wood" Relationship="Context.FK_Boats_Wood" FromRole="Boat" ToRole="Wood" />
-          <NavigationProperty Name="Fit" Relationship="Context.FK_Fit_Boats" FromRole="Boat" ToRole="Fit" />
-          <NavigationProperty Name="Order" Relationship="Context.FK_Order_Boats" FromRole="Boat" ToRole="Order" />
-        </EntityType>
-        <Association Name="FK_Boats_BoatType">
-          <End Type="Context.BoatType" Role="BoatType" Multiplicity="1" />
-          <End Type="Context.Boat" Role="Boat" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BoatType">
-              <PropertyRef Name="BoatTypeId" />
-            </Principal>
-            <Dependent Role="Boat">
-              <PropertyRef Name="BoatTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Boats_Wood">
-          <End Type="Context.Wood" Role="Wood" Multiplicity="1" />
-          <End Type="Context.Boat" Role="Boat" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Wood">
-              <PropertyRef Name="WoodId" />
-            </Principal>
-            <Dependent Role="Boat">
-              <PropertyRef Name="WoodId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Fit_Boats">
-          <End Type="Context.Boat" Role="Boat" Multiplicity="0..1" />
-          <End Type="Context.Fit" Role="Fit" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Boat">
-              <PropertyRef Name="BoatId" />
-            </Principal>
-            <Dependent Role="Fit">
-              <PropertyRef Name="BoatId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Order_Boats">
-          <End Type="Context.Boat" Role="Boat" Multiplicity="0..1" />
-          <End Type="Context.Order" Role="Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Boat">
-              <PropertyRef Name="BoatId" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="BoatId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -819,6 +971,39 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Boat">
+            <EntityTypeMapping TypeName="Context.Boat">
+              <MappingFragment StoreEntitySet="Boat">
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+                <ScalarProperty Name="ColorId" ColumnName="ColorId" />
+                <ScalarProperty Name="WoodId" ColumnName="WoodId" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="VAT" ColumnName="VAT" />
+                <ScalarProperty Name="BasePrice" ColumnName="BasePrice" />
+                <ScalarProperty Name="Mast" ColumnName="Mast" />
+                <ScalarProperty Name="NumberOfRowers" ColumnName="NumberOfRowers" />
+                <ScalarProperty Name="BoatTypeId" ColumnName="BoatTypeId" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="BoatId" ColumnName="BoatId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BoatClass">
+            <EntityTypeMapping TypeName="Context.BoatClass">
+              <MappingFragment StoreEntitySet="BoatClass">
+                <ScalarProperty Name="ClassTitle" ColumnName="ClassTitle" />
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BoatColor">
+            <EntityTypeMapping TypeName="Context.BoatColor">
+              <MappingFragment StoreEntitySet="BoatColor">
+                <ScalarProperty Name="ColorTitle" ColumnName="ColorTitle" />
+                <ScalarProperty Name="ColorId" ColumnName="ColorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="BoatType">
             <EntityTypeMapping TypeName="Context.BoatType">
               <MappingFragment StoreEntitySet="BoatType">
@@ -830,8 +1015,8 @@
           <EntitySetMapping Name="Contract">
             <EntityTypeMapping TypeName="Context.Contract">
               <MappingFragment StoreEntitySet="Contract">
+                <ScalarProperty Name="ProcessId" ColumnName="ProcessId" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="ProductionProcess" ColumnName="ProductionProcess" />
                 <ScalarProperty Name="ContracTotalPriceInclVAT" ColumnName="ContracTotalPriceInclVAT" />
                 <ScalarProperty Name="ContractTotalPrice" ColumnName="ContractTotalPrice" />
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
@@ -917,6 +1102,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ProductionProcess">
+            <EntityTypeMapping TypeName="Context.ProductionProcess">
+              <MappingFragment StoreEntitySet="ProductionProcess">
+                <ScalarProperty Name="ProcessTitle" ColumnName="ProcessTitle" />
+                <ScalarProperty Name="ProcessId" ColumnName="ProcessId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Role">
             <EntityTypeMapping TypeName="Context.Role">
               <MappingFragment StoreEntitySet="Role">
@@ -955,22 +1148,6 @@
               <MappingFragment StoreEntitySet="Wood">
                 <ScalarProperty Name="WoodTitle" ColumnName="WoodTitle" />
                 <ScalarProperty Name="WoodId" ColumnName="WoodId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Boat">
-            <EntityTypeMapping TypeName="Context.Boat">
-              <MappingFragment StoreEntitySet="Boat">
-                <ScalarProperty Name="WoodId" ColumnName="WoodId" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="VAT" ColumnName="VAT" />
-                <ScalarProperty Name="BasePrice" ColumnName="BasePrice" />
-                <ScalarProperty Name="Colour" ColumnName="Colour" />
-                <ScalarProperty Name="Mast" ColumnName="Mast" />
-                <ScalarProperty Name="NumberOfRowers" ColumnName="NumberOfRowers" />
-                <ScalarProperty Name="BoatTypeId" ColumnName="BoatTypeId" />
-                <ScalarProperty Name="Model" ColumnName="Model" />
-                <ScalarProperty Name="BoatId" ColumnName="BoatId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

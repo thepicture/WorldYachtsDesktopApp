@@ -26,6 +26,9 @@ namespace WorldYachtsDesktopApp.Models.Entities
         }
     
         public virtual DbSet<Accessory> Accessory { get; set; }
+        public virtual DbSet<Boat> Boat { get; set; }
+        public virtual DbSet<BoatClass> BoatClass { get; set; }
+        public virtual DbSet<BoatColor> BoatColor { get; set; }
         public virtual DbSet<BoatType> BoatType { get; set; }
         public virtual DbSet<Contract> Contract { get; set; }
         public virtual DbSet<Customer> Customer { get; set; }
@@ -34,10 +37,10 @@ namespace WorldYachtsDesktopApp.Models.Entities
         public virtual DbSet<Invoice> Invoice { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<Partner> Partner { get; set; }
+        public virtual DbSet<ProductionProcess> ProductionProcess { get; set; }
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<SalesPerson> SalesPerson { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<Wood> Wood { get; set; }
-        public virtual DbSet<Boat> Boat { get; set; }
     }
 }

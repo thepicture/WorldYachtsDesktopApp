@@ -84,7 +84,7 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
                                                        + "удалить аксессуар. "
                                                        + "Перезагрузите "
                                                        + "страницу");
-                Debug.Write(ex.StackTrace);
+                Debug.WriteLine(ex.StackTrace);
             }
         }
 
@@ -146,7 +146,7 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
                                                        + "об аксессуаре. "
                                                        + "Перезагрузите "
                                                        + "страницу");
-                Debug.Write(ex.StackTrace);
+                Debug.WriteLine(ex.StackTrace);
             }
         }
 

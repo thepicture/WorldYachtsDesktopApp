@@ -26,12 +26,15 @@ namespace WorldYachtsDesktopApp.Models.Entities
         public int BoatTypeId { get; set; }
         public int NumberOfRowers { get; set; }
         public bool Mast { get; set; }
-        public string Colour { get; set; }
         public decimal BasePrice { get; set; }
         public decimal VAT { get; set; }
         public bool IsDeleted { get; set; }
         public int WoodId { get; set; }
+        public int ColorId { get; set; }
+        public Nullable<int> ClassId { get; set; }
     
+        public virtual BoatClass BoatClass { get; set; }
+        public virtual BoatColor BoatColor { get; set; }
         public virtual BoatType BoatType { get; set; }
         public virtual Wood Wood { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

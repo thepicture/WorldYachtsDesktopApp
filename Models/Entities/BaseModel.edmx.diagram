@@ -5,33 +5,39 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="97d4b4a42b1946079ad5c1c88583e752" Name="Diagram1">
-        <EntityTypeShape EntityType="Context.Accessory" Width="1.5" PointX="3" PointY="10.125" />
-        <EntityTypeShape EntityType="Context.BoatType" Width="1.5" PointX="0.75" PointY="3.125" />
-        <EntityTypeShape EntityType="Context.Contract" Width="1.5" PointX="10.5" PointY="8.375" />
+        <EntityTypeShape EntityType="Context.Accessory" Width="1.5" PointX="3" PointY="14.125" />
+        <EntityTypeShape EntityType="Context.Boat" Width="1.5" PointX="3" PointY="4.75" />
+        <EntityTypeShape EntityType="Context.BoatClass" Width="1.5" PointX="0.75" PointY="9.125" />
+        <EntityTypeShape EntityType="Context.BoatColor" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="Context.BoatType" Width="1.5" PointX="0.75" PointY="6.125" />
+        <EntityTypeShape EntityType="Context.Contract" Width="1.5" PointX="13.5" PointY="5.25" />
         <EntityTypeShape EntityType="Context.Customer" Width="1.5" PointX="6" PointY="0.75" />
-        <EntityTypeShape EntityType="Context.Detail" Width="1.5" PointX="10.5" PointY="4.75" />
+        <EntityTypeShape EntityType="Context.Detail" Width="1.5" PointX="10.5" PointY="5.75" />
         <EntityTypeShape EntityType="Context.Fit" Width="1.5" PointX="5.25" PointY="5.75" />
-        <EntityTypeShape EntityType="Context.Invoice" Width="1.5" PointX="12.75" PointY="8.5" />
+        <EntityTypeShape EntityType="Context.Invoice" Width="1.5" PointX="15.75" PointY="5.625" />
         <EntityTypeShape EntityType="Context.Order" Width="1.5" PointX="8.25" PointY="5.125" />
-        <EntityTypeShape EntityType="Context.Partner" Width="1.5" PointX="0.75" PointY="10.75" />
-        <EntityTypeShape EntityType="Context.Role" Width="1.5" PointX="5.75" PointY="13.625" />
+        <EntityTypeShape EntityType="Context.Partner" Width="1.5" PointX="0.75" PointY="14.75" />
+        <EntityTypeShape EntityType="Context.ProductionProcess" Width="1.5" PointX="11.25" PointY="3.125" />
+        <EntityTypeShape EntityType="Context.Role" Width="1.5" PointX="8.75" PointY="10.5" />
         <EntityTypeShape EntityType="Context.SalesPerson" Width="1.5" PointX="6" PointY="9" />
-        <EntityTypeShape EntityType="Context.User" Width="1.5" PointX="8" PointY="13.125" />
-        <EntityTypeShape EntityType="Context.Wood" Width="1.5" PointX="0.75" PointY="6.125" />
+        <EntityTypeShape EntityType="Context.User" Width="1.5" PointX="11" PointY="10.125" />
+        <EntityTypeShape EntityType="Context.Wood" Width="1.5" PointX="0.75" PointY="11.375" />
         <AssociationConnector Association="Context.FK_Accessory_Partner" />
         <AssociationConnector Association="Context.FK_Detail_Accessory" />
         <AssociationConnector Association="Context.FK_Fit_Accessory" />
+        <AssociationConnector Association="Context.FK_Boat_BoatClass" />
+        <AssociationConnector Association="Context.FK_Boat_BoatColor" />
+        <AssociationConnector Association="Context.FK_Boats_BoatType" />
+        <AssociationConnector Association="Context.FK_Boats_Wood" />
+        <AssociationConnector Association="Context.FK_Fit_Boats" />
+        <AssociationConnector Association="Context.FK_Order_Boats" />
         <AssociationConnector Association="Context.FK_Contract_Order" />
+        <AssociationConnector Association="Context.FK_Contract_ProductionProcess" />
         <AssociationConnector Association="Context.FK_Invoice_Contract" />
         <AssociationConnector Association="Context.FK_Order_Customer" />
         <AssociationConnector Association="Context.FK_Detail_Order" />
         <AssociationConnector Association="Context.FK_Order_Salesperson" />
         <AssociationConnector Association="Context.FK_User_Role" />
-        <EntityTypeShape EntityType="Context.Boat" Width="1.5" PointX="3" PointY="3.625" />
-        <AssociationConnector Association="Context.FK_Boats_BoatType" />
-        <AssociationConnector Association="Context.FK_Boats_Wood" />
-        <AssociationConnector Association="Context.FK_Fit_Boats" />
-        <AssociationConnector Association="Context.FK_Order_Boats" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
