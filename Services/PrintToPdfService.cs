@@ -13,13 +13,16 @@ namespace WorldYachtsDesktopApp.Services
             try
             {
                 using (PrintServer server = new PrintServer())
+                using (PrintQueue queue =
+                    new PrintQueue(server,
+                                   "Microsoft Print to PDF"))
                 {
-                    PrintQueue queue = new PrintQueue(server, "Microsoft Print to PDF");
                     PrintDialog dialog = new PrintDialog
                     {
-                        PrintQueue = queue
+                        PrintQueue = queue,
                     };
-                    if ((bool)dialog.ShowDialog())
+                    bool? wantsToPrint = dialog.ShowDialog();
+                    if (wantsToPrint != null && (bool)wantsToPrint)
                     {
                         dialog.PrintVisual(target, description);
                         return true;

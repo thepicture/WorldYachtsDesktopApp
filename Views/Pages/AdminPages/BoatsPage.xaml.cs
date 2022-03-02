@@ -19,6 +19,7 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
     public partial class BoatsPage : Page
     {
         public IEnumerable<BoatType> BoatTypes { get; set; }
+        public IEnumerable<BoatClass> BoatClasses { get; set; }
         public IEnumerable<Wood> WoodTypes { get; set; }
         public IEnumerable<BoatColor> Colors { get; set; }
         private readonly IFeedbackService feedbackService =
@@ -53,6 +54,14 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
                     return context.BoatType.ToList();
                 }
             });
+            BoatClasses = await Task.Run(() =>
+            {
+                using (WorldYachtsBaseEntities context =
+                new WorldYachtsBaseEntities())
+                {
+                    return context.BoatClass.ToList();
+                }
+            });
             Colors = await Task.Run(() =>
             {
                 using (WorldYachtsBaseEntities context =
@@ -75,6 +84,7 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
                     .Include(b => b.Wood)
                     .Include(b => b.BoatColor)
                     .Include(b => b.BoatType)
+                    .Include(b => b.BoatClass)
                     .Where(b => !b.IsDeleted)
                     .ToList();
                 }
@@ -163,6 +173,10 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
             {
                 errors.AppendLine("Укажите тип лодки");
             }
+            if (boat.ClassId == 0)
+            {
+                errors.AppendLine("Укажите класс лодки");
+            }
             if (errors.Length > 0)
             {
                 await feedbackService.WarnAsync(errors.ToString());
@@ -239,11 +253,11 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
         {
             if (printService
                 .Print(BoatsGrid, "распечатать "
-                                  + "список лодок в .pdf"))
+                    + "список лодок в .pdf"))
             {
-                await feedbackService.InformAsync("Список "
-                                                  + "лодок "
-                                                  + "успешно распечатан");
+                await feedbackService
+                    .InformAsync("Список лодок "
+                              + $"успешно распечатан");
             }
             else
             {

@@ -11,6 +11,7 @@
         /// </summary>
         /// <param name="target">Цель распечатки.</param>
         /// <param name="description">Описание распечатки.</param>
+        /// <param name="path">Путь распечатанного файла.</param>
         /// <returns><see langword="true"/>, если печать успешна, 
         /// иначе <see langword="false"/>.</returns>
         bool Print(TPrintTarget target, string description);

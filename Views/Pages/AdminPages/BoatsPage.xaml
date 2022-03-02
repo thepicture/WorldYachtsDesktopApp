@@ -43,8 +43,25 @@
                   SelectionMode="Extended"
                   Grid.Row="1">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Наименование товара"
+                <DataGridTextColumn Header="Наименование"
                                     Binding="{Binding Model, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridComboBoxColumn Header="Класс"
+                                        DisplayMemberPath="ClassTitle"
+                                        SelectedValuePath="ClassId"
+                                        SelectedValueBinding="{Binding ClassId, UpdateSourceTrigger=PropertyChanged}">
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}, Path=DataContext.BoatClasses}" />
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}, Path=DataContext.BoatClasses}" />
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                </DataGridComboBoxColumn>
                 <DataGridTextColumn Header="Номер для заказа"
                                     Binding="{Binding BoatId}"
                                     IsReadOnly="True" />
