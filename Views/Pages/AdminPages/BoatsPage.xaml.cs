@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using WorldYachtsDesktopApp.Models.Entities;
 using WorldYachtsDesktopApp.Services;
 
@@ -22,6 +23,8 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
         public IEnumerable<BoatColor> Colors { get; set; }
         private readonly IFeedbackService feedbackService =
             new MessageBoxFeedbackService();
+        private readonly IPrintService<Visual> printService =
+            new PrintToPdfService();
 
         public BoatsPage()
         {
@@ -227,6 +230,27 @@ namespace WorldYachtsDesktopApp.Views.Pages.AdminPages
         {
             IEnumerable<Boat> boats = BoatsGrid.SelectedItems.Cast<Boat>();
             NavigationService.Navigate(new ChangeBoatsPricePage(boats));
+        }
+
+        /// <summary>
+        /// Распечатывает список в формат .pdf.
+        /// </summary>
+        private async void PrintList(object sender, RoutedEventArgs e)
+        {
+            if (printService
+                .Print(BoatsGrid, "распечатать "
+                                  + "список лодок в .pdf"))
+            {
+                await feedbackService.InformAsync("Список "
+                                                  + "лодок "
+                                                  + "успешно распечатан");
+            }
+            else
+            {
+                await feedbackService.InformAsync("Печать была отменена "
+                                                  + "или принтер "
+                                                  + "не подключен");
+            }
         }
     }
 }
